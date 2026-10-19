@@ -75,7 +75,11 @@
   - `PillButton.tsx`: wcag-compliant gold (with espresso text), secondary, and ghost variants.
   - `CueCard.tsx`: docked in safe zone above shutter, leaving central 70% unobstructed.
   - `MannequinView.tsx`: skeletal joint and bone rendering.
-- typescript check: passes with 0 errors.
+### 5. eas cloud build verification
+- android development build completed successfully on eas cloud.
+- build profile: `development` (apk internal distribution).
+- eas build url: `https://expo.dev/accounts/geeky-ash/projects/kandid-monorepo/builds/c313d422-aaa6-428d-824f-64e1384158df`
+- verified native installation and dev-client packaging.
 
 ---
 
