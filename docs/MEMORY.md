@@ -79,7 +79,7 @@
 - android development build completed successfully on eas cloud.
   - build profile: `development` (apk internal distribution).
   - build url: `https://expo.dev/accounts/geeky-ash/projects/kandid-monorepo/builds/c313d422-aaa6-428d-824f-64e1384158df`
-- android standalone preview build running on eas cloud.
+- android standalone preview build completed successfully on eas cloud.
   - build profile: `preview` (standalone apk with bundled js code, zero metro server required).
   - build url: `https://expo.dev/accounts/geeky-ash/projects/kandid/builds/eb705181-89e7-4f70-990b-976990748aee`
 - verified native installation and dev-client packaging.
