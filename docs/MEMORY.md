@@ -77,8 +77,11 @@
   - `MannequinView.tsx`: skeletal joint and bone rendering.
 ### 5. eas cloud build verification
 - android development build completed successfully on eas cloud.
-- build profile: `development` (apk internal distribution).
-- eas build url: `https://expo.dev/accounts/geeky-ash/projects/kandid-monorepo/builds/c313d422-aaa6-428d-824f-64e1384158df`
+  - build profile: `development` (apk internal distribution).
+  - build url: `https://expo.dev/accounts/geeky-ash/projects/kandid-monorepo/builds/c313d422-aaa6-428d-824f-64e1384158df`
+- android standalone preview build running on eas cloud.
+  - build profile: `preview` (standalone apk with bundled js code, zero metro server required).
+  - build url: `https://expo.dev/accounts/geeky-ash/projects/kandid-monorepo/builds/b34245c2-fc16-4916-ba73-970db21fe5e0`
 - verified native installation and dev-client packaging.
 
 ---
