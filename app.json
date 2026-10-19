@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "225a18dd-c2d3-4136-a7fc-700e423fe4a3"
+      }
+    },
+    "android": {
+      "package": "com.geekyash.kandidmonorepo"
+    }
+  }
+}
