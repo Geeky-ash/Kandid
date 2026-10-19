@@ -81,7 +81,7 @@
   - build url: `https://expo.dev/accounts/geeky-ash/projects/kandid-monorepo/builds/c313d422-aaa6-428d-824f-64e1384158df`
 - android standalone preview build running on eas cloud.
   - build profile: `preview` (standalone apk with bundled js code, zero metro server required).
-  - build url: `https://expo.dev/accounts/geeky-ash/projects/kandid-monorepo/builds/b34245c2-fc16-4916-ba73-970db21fe5e0`
+  - build url: `https://expo.dev/accounts/geeky-ash/projects/kandid/builds/54f5f95a-802c-4120-83c8-b0a16728ec28`
 - verified native installation and dev-client packaging.
 
 ---
