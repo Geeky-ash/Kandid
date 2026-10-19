@@ -17,6 +17,8 @@ node_modules/
 # Build artifacts and caches
 dist/
 build/
+android/
+ios/
 .expo/
 .next/
 out/
