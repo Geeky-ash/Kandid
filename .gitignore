@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+
+# Agent and MCP credentials
+.agents/mcp_config.json
+.agents/secrets/
+
+# Build artifacts and caches
+dist/
+build/
+.expo/
+.next/
+out/
+*.tsbuildinfo
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

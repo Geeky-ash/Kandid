@@ -1,0 +1,17 @@
+{
+  "name": "@kandid/ui-tokens",
+  "version": "1.0.0",
+  "private": true,
+  "description": "design tokens for kandid — warm editorial glass",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test:tokens": "ts-node scripts/check-token-drift.ts"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5"
+  }
+}

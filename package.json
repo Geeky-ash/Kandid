@@ -1,0 +1,29 @@
+{
+  "name": "kandid-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "kandid — effortless angles for every shot",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:tokens": "npm run test:tokens --workspace=@kandid/ui-tokens",
+    "mobile": "npm run start --workspace=@kandid/mobile",
+    "web": "npm run dev --workspace=@kandid/web"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "expo": "58.0.14"
+  }
+}
