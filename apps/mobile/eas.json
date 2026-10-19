@@ -7,14 +7,20 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "npmInstallFlags": ["--legacy-peer-deps"]
+      "env": {
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+      }
     },
     "preview": {
       "distribution": "internal",
-      "npmInstallFlags": ["--legacy-peer-deps"]
+      "env": {
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+      }
     },
     "production": {
-      "npmInstallFlags": ["--legacy-peer-deps"]
+      "env": {
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+      }
     }
   }
 }
