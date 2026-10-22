@@ -9,7 +9,8 @@
       "distribution": "internal",
       "env": {
         "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
-        "GRADLE_OPTS": "-Dorg.gradle.jvmargs=\"-Xmx3584m -XX:MaxMetaspaceSize=1024m\" -Dorg.gradle.parallel=false -Dorg.gradle.workers.max=2"
+        "CMAKE_BUILD_PARALLEL_LEVEL": "1",
+        "GRADLE_OPTS": "-Dorg.gradle.jvmargs=\"-Xmx2048m -XX:MaxMetaspaceSize=512m\" -Dorg.gradle.parallel=false -Dorg.gradle.workers.max=1"
       }
     },
     "preview": {
@@ -19,7 +20,8 @@
       },
       "env": {
         "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
-        "GRADLE_OPTS": "-Dorg.gradle.jvmargs=\"-Xmx3584m -XX:MaxMetaspaceSize=1024m\" -Dorg.gradle.parallel=false -Dorg.gradle.workers.max=2"
+        "CMAKE_BUILD_PARALLEL_LEVEL": "1",
+        "GRADLE_OPTS": "-Dorg.gradle.jvmargs=\"-Xmx2048m -XX:MaxMetaspaceSize=512m\" -Dorg.gradle.parallel=false -Dorg.gradle.workers.max=1"
       }
     },
     "production": {
