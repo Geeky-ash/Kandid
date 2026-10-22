@@ -76,8 +76,10 @@
   - `CueCard.tsx`: docked in safe zone above shutter, leaving central 70% unobstructed.
   - `MannequinView.tsx`: skeletal joint and bone rendering.
 ### 5. eas cloud build verification
-- android development build (m2 updated) completed successfully on eas cloud.
+- android development build (m4 + nitro-modules updated):
   - build profile: `development` (apk internal distribution).
+  - build url: `https://expo.dev/accounts/geeky-ash/projects/kandid/builds/9bb4c5f2-315b-4422-ab5e-3d1200c281d2`
+- android development build (m2 updated) completed successfully on eas cloud:
   - build url: `https://expo.dev/accounts/geeky-ash/projects/kandid/builds/2ffb5b76-3d02-4b49-b683-36edf60ceef5`
 - android standalone preview build completed successfully on eas cloud.
   - build profile: `preview` (standalone apk with bundled js code, zero metro server required).
