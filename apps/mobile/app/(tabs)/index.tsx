@@ -3,10 +3,18 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius, space, typography } from '@kandid/ui-tokens';
-import { copy } from '@kandid/content';
+import { copy, seedPoses } from '@kandid/content';
 
 export default function HomeScreen() {
   const router = useRouter();
+
+  const handleRandomPose = () => {
+    const randomIndex = Math.floor(Math.random() * seedPoses.length);
+    const randomPose = seedPoses[randomIndex];
+    if (randomPose) {
+      router.push(`/pose/${randomPose.id}` as any);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -27,7 +35,6 @@ export default function HomeScreen() {
 
         {/* dual mode selector cards */}
         <View style={styles.cardsContainer}>
-          {/* mode card 1: pose camera */}
           <TouchableOpacity
             style={styles.modeCardPrimary}
             onPress={() => router.push('/camera')}
@@ -43,7 +50,6 @@ export default function HomeScreen() {
             <Text style={styles.modeCardSubtitle}>{copy.home.modes.poseCamera.subtitle}</Text>
           </TouchableOpacity>
 
-          {/* mode card 2: hands-free series */}
           <TouchableOpacity
             style={styles.modeCardSecondary}
             onPress={() => router.push('/camera')}
@@ -60,7 +66,7 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* quick actions row */}
+        {/* quick tools bar */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>quick tools</Text>
         </View>
@@ -77,7 +83,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={styles.quickActionPill}
-            onPress={() => router.push('/(tabs)/poses')}
+            onPress={handleRandomPose}
             activeOpacity={0.8}
           >
             <Text style={styles.quickActionIcon}>✨</Text>
@@ -85,7 +91,28 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* bottom spacing for floating tab bar */}
+        {/* popular today horizontal carousel */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>popular today</Text>
+        </View>
+
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.popularScroll}>
+          {seedPoses.slice(0, 5).map(pose => (
+            <TouchableOpacity
+              key={pose.id}
+              style={styles.popularCard}
+              onPress={() => router.push(`/pose/${pose.id}` as any)}
+              activeOpacity={0.85}
+            >
+              <View style={styles.popularThumbnail}>
+                <Text style={styles.popularIcon}>🧍</Text>
+              </View>
+              <Text style={styles.popularTitle} numberOfLines={1}>{pose.title}</Text>
+              <Text style={styles.popularCategory}>{pose.category}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
         <View style={styles.bottomSpacer} />
       </ScrollView>
     </SafeAreaView>
@@ -175,7 +202,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   popularBadge: {
-    backgroundColor: colors.text.onGold, // espresso badge on gold card
+    backgroundColor: colors.text.onGold,
     paddingHorizontal: space.sm,
     paddingVertical: 3,
     borderRadius: radius.pill,
@@ -201,13 +228,13 @@ const styles = StyleSheet.create({
   modeCardTitle: {
     fontFamily: typography.fontFamilies.headline,
     fontSize: typography.fontSize.headlineMd,
-    color: colors.text.onGold, // strictly espresso text on gold
+    color: colors.text.onGold,
     marginBottom: 4,
   },
   modeCardSubtitle: {
     fontFamily: typography.fontFamilies.body,
     fontSize: typography.fontSize.bodySm,
-    color: '#3A3228', // dark warm tone for contrast on gold
+    color: '#3A3228',
     lineHeight: 18,
   },
   modeCardTitleSecondary: {
@@ -233,7 +260,7 @@ const styles = StyleSheet.create({
   quickActionsRow: {
     flexDirection: 'row',
     gap: space.md,
-    marginBottom: space.xl,
+    marginBottom: space.lg,
   },
   quickActionPill: {
     flex: 1,
@@ -256,6 +283,40 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.bodySm,
     fontWeight: typography.fontWeight.semibold,
     color: colors.text.primary,
+  },
+  popularScroll: {
+    gap: space.md,
+    paddingBottom: space.md,
+  },
+  popularCard: {
+    width: 130,
+    backgroundColor: colors.background.surface,
+    borderRadius: radius.xl,
+    padding: space.sm,
+    borderWidth: 1,
+    borderColor: colors.border.subtle,
+  },
+  popularThumbnail: {
+    height: 90,
+    backgroundColor: colors.background.secondary,
+    borderRadius: radius.lg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: space.xs,
+  },
+  popularIcon: {
+    fontSize: 32,
+    opacity: 0.6,
+  },
+  popularTitle: {
+    fontFamily: typography.fontFamilies.headline,
+    fontSize: 13,
+    color: colors.text.primary,
+  },
+  popularCategory: {
+    fontFamily: typography.fontFamilies.body,
+    fontSize: 11,
+    color: colors.text.secondary,
   },
   bottomSpacer: {
     height: 100,

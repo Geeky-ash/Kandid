@@ -4,11 +4,15 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius, space, typography } from '@kandid/ui-tokens';
 import { copy, seedPoses, PoseCategory } from '@kandid/content';
+import { useGuestStore } from '../../src/stores/guestStore';
+import { MannequinView } from '../../src/components/camera/MannequinView';
 
 export default function PosesScreen() {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const toggleSavePose = useGuestStore(state => state.toggleSavePose);
+  const isPoseSaved = useGuestStore(state => state.isPoseSaved);
 
   const filteredPoses = seedPoses.filter(pose => {
     const matchesCategory = selectedCategory === 'all' || pose.category === selectedCategory;
@@ -17,16 +21,21 @@ export default function PosesScreen() {
     return matchesCategory && matchesSearch;
   });
 
+  const getCategoryCount = (categoryId: string) => {
+    if (categoryId === 'all') return seedPoses.length;
+    return seedPoses.filter(p => p.category === categoryId).length;
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         {/* top header */}
         <View style={styles.header}>
-          <Text style={styles.title}>{copy.navigation.poses}</Text>
+          <Text style={styles.title}>{copy.poseLibrary.headerTitle}</Text>
           <Text style={styles.countBadge}>{filteredPoses.length} poses</Text>
         </View>
 
-        {/* search input */}
+        {/* rounded search input */}
         <View style={styles.searchBox}>
           <Text style={styles.searchIcon}>🔍</Text>
           <TextInput
@@ -39,7 +48,7 @@ export default function PosesScreen() {
           />
         </View>
 
-        {/* filter chips horizontal scroll */}
+        {/* category filter pills with count badges */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -47,6 +56,7 @@ export default function PosesScreen() {
         >
           {copy.poseLibrary.filterCategories.map(cat => {
             const isSelected = selectedCategory === cat.id;
+            const count = getCategoryCount(cat.id);
             return (
               <TouchableOpacity
                 key={cat.id}
@@ -57,35 +67,64 @@ export default function PosesScreen() {
                 <Text style={[styles.filterChipText, isSelected && styles.filterChipTextActive]}>
                   {cat.label}
                 </Text>
+                <View style={[styles.filterBadge, isSelected && styles.filterBadgeActive]}>
+                  <Text style={[styles.filterBadgeText, isSelected && styles.filterBadgeTextActive]}>
+                    {count}
+                  </Text>
+                </View>
               </TouchableOpacity>
             );
           })}
         </ScrollView>
 
-        {/* 2-column grid of poses */}
+        {/* 2-column pose grid */}
         <ScrollView contentContainerStyle={styles.gridContainer} showsVerticalScrollIndicator={false}>
           <View style={styles.gridRow}>
-            {filteredPoses.map(pose => (
-              <TouchableOpacity
-                key={pose.id}
-                style={styles.poseCard}
-                onPress={() => router.push('/camera')}
-                activeOpacity={0.85}
-              >
-                <View style={styles.poseCardThumbnail}>
-                  <Text style={styles.poseCardPlaceholder}>🧍</Text>
-                  {pose.isPro && (
-                    <View style={styles.proChip}>
-                      <Text style={styles.proChipText}>pro</Text>
+            {filteredPoses.map(pose => {
+              const saved = isPoseSaved(pose.id);
+              return (
+                <TouchableOpacity
+                  key={pose.id}
+                  style={styles.poseCard}
+                  onPress={() => router.push(`/pose/${pose.id}` as any)}
+                  activeOpacity={0.85}
+                >
+                  {/* mannequin preview container */}
+                  <View style={styles.mannequinPreview}>
+                    <MannequinView joints={pose.skeletonJoints} width={130} height={120} />
+
+                    {/* pro badge */}
+                    {pose.isPro && (
+                      <View style={styles.proChip}>
+                        <Text style={styles.proChipText}>pro</Text>
+                      </View>
+                    )}
+
+                    {/* heart save button */}
+                    <TouchableOpacity
+                      accessibilityLabel="save pose"
+                      style={styles.heartButton}
+                      onPress={() => toggleSavePose(pose.id)}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={[styles.heartIcon, saved && styles.heartIconActive]}>
+                        {saved ? '♥' : '♡'}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* meta details */}
+                  <View style={styles.poseCardMeta}>
+                    <Text style={styles.poseCardTitle} numberOfLines={1}>{pose.title}</Text>
+                    <View style={styles.categoryRow}>
+                      <Text style={styles.poseCardCategory}>{pose.category}</Text>
+                      <Text style={styles.difficultyDot}>•</Text>
+                      <Text style={styles.difficultyText}>{pose.difficulty}</Text>
                     </View>
-                  )}
-                </View>
-                <View style={styles.poseCardMeta}>
-                  <Text style={styles.poseCardTitle}>{pose.title}</Text>
-                  <Text style={styles.poseCardCategory}>{pose.category}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
           </View>
           <View style={styles.bottomSpacer} />
         </ScrollView>
@@ -147,17 +186,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.marginMobile,
     paddingVertical: space.xs,
     gap: space.xs,
-    maxHeight: 44,
+    maxHeight: 46,
   },
   filterChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: space.md,
     paddingVertical: 6,
     borderRadius: radius.pill,
     backgroundColor: colors.background.surface,
     borderWidth: 1,
     borderColor: colors.border.subtle,
-    alignItems: 'center',
-    justifyContent: 'center',
+    gap: 6,
   },
   filterChipActive: {
     backgroundColor: colors.text.primary,
@@ -172,6 +212,24 @@ const styles = StyleSheet.create({
   filterChipTextActive: {
     color: colors.background.primary,
     fontWeight: typography.fontWeight.semibold,
+  },
+  filterBadge: {
+    backgroundColor: colors.background.secondary,
+    paddingHorizontal: 5,
+    paddingVertical: 1,
+    borderRadius: radius.pill,
+  },
+  filterBadgeActive: {
+    backgroundColor: 'rgba(252, 249, 244, 0.25)',
+  },
+  filterBadgeText: {
+    fontFamily: typography.fontFamilies.body,
+    fontSize: 10,
+    color: colors.text.secondary,
+    fontWeight: typography.fontWeight.bold,
+  },
+  filterBadgeTextActive: {
+    color: colors.background.primary,
   },
   gridContainer: {
     paddingHorizontal: space.marginMobile,
@@ -190,25 +248,29 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border.subtle,
     overflow: 'hidden',
+    shadowColor: colors.text.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 2,
   },
-  poseCardThumbnail: {
+  mannequinPreview: {
     height: 140,
-    backgroundColor: colors.background.secondary,
+    backgroundColor: '#1C1A18', // dark backdrop to highlight golden mannequin lines
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  poseCardPlaceholder: {
-    fontSize: 48,
-    opacity: 0.6,
+    position: 'relative',
+    overflow: 'hidden',
   },
   proChip: {
     position: 'absolute',
     top: space.xs,
-    right: space.xs,
+    left: space.xs,
     backgroundColor: colors.brand.gold,
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: radius.pill,
+    zIndex: 10,
   },
   proChipText: {
     fontFamily: typography.fontFamilies.body,
@@ -216,19 +278,52 @@ const styles = StyleSheet.create({
     color: colors.text.onGold,
     fontWeight: typography.fontWeight.bold,
   },
+  heartButton: {
+    position: 'absolute',
+    top: space.xs,
+    right: space.xs,
+    width: 28,
+    height: 28,
+    borderRadius: radius.pill,
+    backgroundColor: 'rgba(28, 26, 24, 0.65)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
+  },
+  heartIcon: {
+    fontSize: 15,
+    color: colors.text.inverse,
+  },
+  heartIconActive: {
+    color: '#E06D63', // warm crimson heart
+  },
   poseCardMeta: {
     padding: space.sm,
   },
   poseCardTitle: {
     fontFamily: typography.fontFamilies.headline,
     fontSize: typography.fontSize.bodyMd,
-    fontWeight: typography.fontWeight.medium,
+    fontWeight: typography.fontWeight.semibold,
     color: colors.text.primary,
     marginBottom: 2,
+  },
+  categoryRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
   poseCardCategory: {
     fontFamily: typography.fontFamilies.body,
     fontSize: 11,
+    color: colors.text.secondary,
+  },
+  difficultyDot: {
+    fontSize: 10,
+    color: colors.text.tertiary,
+  },
+  difficultyText: {
+    fontFamily: typography.fontFamilies.body,
+    fontSize: 10,
     color: colors.text.secondary,
   },
   bottomSpacer: {

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-variant": "#eae1da", "on-tertiary-fixed": "#131e15", "surface": "#fff8f4", "error": "#ba1a1a", "tertiary-fixed": "#d9e6d8", "on-primary-fixed": "#271900", "surface-bright": "#fff8f4", "inverse-surface": "#34302b", "secondary-fixed-dim": "#d8c2bc", "secondary-fixed": "#f5ddd7", "on-primary": "#ffffff", "error-container": "#ffdad6", "tertiary-fixed-dim": "#bdcabc", "on-error": "#ffffff", "surface-container-high": "#f0e6e0", "outline": "#817564", "surface-dim": "#e1d8d2", "outline-variant": "#d3c4b1", "inverse-primary": "#f5bd58", "tertiary": "#556156", "on-surface-variant": "#4f4536", "primary": "#7d5700", "surface-tint": "#7d5700", "on-secondary-container": "#705f5a", "on-error-container": "#93000a", "background": "#fff8f4", "on-tertiary": "#ffffff", "on-tertiary-fixed-variant": "#3e4a3f", "on-background": "#1f1b17", "on-surface": "#1f1b17", "inverse-on-surface": "#f9efe8", "surface-container-lowest": "#ffffff", "secondary": "#6c5a56", "on-primary-container": "#573c00", "on-tertiary-container": "#384339", "on-primary-fixed-variant": "#5f4100", "secondary-container": "#f2dbd5", "surface-container": "#f6ece5", "tertiary-container": "#a3b0a3", "surface-container-highest": "#eae1da", "on-secondary-fixed": "#251915", "primary-container": "#d9a441", "primary-fixed-dim": "#f5bd58", "primary-fixed": "#ffdeaa", "surface-container-low": "#fcf2eb", "on-secondary-fixed-variant": "#53433f", "on-secondary": "#ffffff" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "space-xs": "0.25rem", "space-sm": "0.5rem", "margin": "1.25rem", "space-xl": "2rem", "gutter": "1rem", "margin-mobile": "1rem", "space-lg": "1.5rem", "gutter-sm": "0.75rem", "space-md": "1rem" }, fontFamily: { "label-sm": ["Plus Jakarta Sans"], "headline-md": ["Playfair Display"], "headline-xl-mobile": ["Playfair Display"], "body-lg": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "headline-sm": ["Playfair Display"], "body-sm": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-lg": ["Playfair Display"], "headline-xl": ["Playfair Display"], "label-md": ["Plus Jakarta Sans"] }, fontSize: { "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.02em", fontWeight: "500" }], "headline-md": ["22px", { lineHeight: "30px", letterSpacing: "0em", fontWeight: "600" }], "headline-xl-mobile": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600" }], "body-lg": ["17px", { lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }], "headline-sm": ["18px", { lineHeight: "26px", letterSpacing: "0em", fontWeight: "600" }], "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }], "body-md": ["15px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }], "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-xl": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "600" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }] } } } };</script><style>@layer base { html, body { width: 100%; min-height: 100%; margin: 0; padding: 0; } body { overscroll-behavior: none; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 px-margin-mobile flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #2b2a27
+- Font: playfairDisplay
+- Mode: light
+- Roundness: rounded-md
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WAMbJQngfscvZm5ywjjzdFKVBP0tQMSReUw9mUF37d2_QBCbCQQfUiV5-hdxToz4lxt8BAiYQx94iUiheGL0L4Vun3ZqE9nc5-fP_IjlVLxQQCslTZN_7auDvrMEPiM_kod4cuT6AZmlNvi1BSanipE2r-d9ujQL4MreiwnFqOO-rgQ9hDgiqGfQ-iEnBcMKukKIpm747fi0af6t7aUVkD5vwZRKZaNw2CuDzHdGG7IfLzwnyDSCnk"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight lowercase">photogenik</span></div><div class="flex items-center gap-space-sm"><span class="font-label-sm text-label-sm text-on-surface-variant lowercase hidden sm:inline">Poses</span><a class="relative flex items-center justify-center p-0.5 rounded-full hover:opacity-85 transition-opacity" data-path="profile" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-surface-variant" src="https://lh3.googleusercontent.com/aida/AEtjO1WD8RZUMYgthBoLy8SjvhBrXI7Kg1OxJSczk-JdoF3WwiquV9h2ID4N8hNOeugOJ8aT9hrmJPdCP6gxjWcJkk_s93ymRDduTto7Ak0xxJKrIuDu91Ow1_ux2ke0pjdJ0HpxmPQHmYc86h30U4SggzR36I37iN06kMGD-IQzNn93xVIXhh5MVR1P5d53ctROvf3mF9k8dpglUF28R5JAHedGNgUuSElnvPZXjQcrxQvMS641LMA5euZV"/></a></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 bg-surface"><div class="flex flex-col w-full pb-12">
+<div class="px-margin-mobile pt-3 pb-4">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container mb-2.5">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-sm text-label-sm tracking-tight lowercase">pose directory • smart curation</span>
+</div>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface lowercase leading-[1.12] tracking-tight">
+      never wonder what to do with your hands again
+    </h1>
+<p class="font-body-md text-body-md text-secondary lowercase mt-2">
+      350+ poses, tailored to you
+    </p>
+</div>
+<div class="px-margin-mobile mb-4">
+<div class="relative w-full flex items-center">
+<span class="material-symbols-outlined absolute left-4 text-secondary pointer-events-none text-[20px]">
+        search
+      </span>
+<input class="w-full h-12 pl-11 pr-11 bg-surface-container-low rounded-full font-body-sm text-body-sm text-on-surface placeholder:text-secondary focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all lowercase" id="poseSearchInput" placeholder="describe your vibe or location (e.g. coffee shop, walking)" type="search"/>
+<button aria-label="clear search" class="absolute right-3.5 w-6 h-6 rounded-full bg-surface-variant text-on-surface-variant hidden items-center justify-center text-[14px] active:scale-90 transition-transform" id="clearSearchBtn" type="button">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+</div>
+<div class="w-full overflow-x-auto scrollbar-none pl-margin-mobile pr-4 mb-5 flex items-center gap-2">
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md lowercase shadow-sm active:scale-95 transition-all flex items-center gap-1.5" data-filter="all" type="button">
+<span>all</span>
+<span class="px-1.5 py-0.5 rounded-full bg-on-primary-container/15 text-[10px] font-label-sm">350</span>
+</button>
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md lowercase active:scale-95 transition-all flex items-center gap-1.5" data-filter="solo" type="button">
+<span>solo</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm">184</span>
+</button>
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md lowercase active:scale-95 transition-all flex items-center gap-1.5" data-filter="couple" type="button">
+<span>couple</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm">52</span>
+</button>
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md lowercase active:scale-95 transition-all flex items-center gap-1.5" data-filter="besties" type="button">
+<span>besties</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm">38</span>
+</button>
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md lowercase active:scale-95 transition-all flex items-center gap-1.5" data-filter="selfie" type="button">
+<span>selfie</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm">41</span>
+</button>
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md lowercase active:scale-95 transition-all flex items-center gap-1.5" data-filter="mirror" type="button">
+<span>mirror</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm">29</span>
+</button>
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md lowercase active:scale-95 transition-all flex items-center gap-1.5" data-filter="sitting" type="button">
+<span>sitting</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm">67</span>
+</button>
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md lowercase active:scale-95 transition-all flex items-center gap-1.5" data-filter="walking" type="button">
+<span>walking</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm">33</span>
+</button>
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md lowercase active:scale-95 transition-all flex items-center gap-1.5" data-filter="masculine" type="button">
+<span>masculine</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm">74</span>
+</button>
+<button class="chip-filter flex-shrink-0 h-9 px-4 rounded-full bg-surface-container-low text-secondary font-label-md text-label-md lowercase active:scale-95 transition-all flex items-center gap-1.5" data-filter="feminine" type="button">
+<span>feminine</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm">118</span>
+</button>
+</div>
+<div class="px-margin-mobile flex items-center justify-between mb-3">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span class="font-label-sm text-label-sm lowercase">showing 8 featured angles</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm lowercase flex items-center gap-1 active:scale-95 transition-transform" id="shuffleBtn" type="button">
+<span class="material-symbols-outlined text-[14px]">shuffle</span>
+<span>shuffle</span>
+</button>
+</div>
+</div>
+<div class="px-margin-mobile grid grid-cols-2 gap-3" id="poseGrid">
+<div class="pose-card flex flex-col bg-surface-container-lowest rounded-[24px] p-2.5 shadow-sm hover:shadow-md transition-shadow group relative" data-category="mirror solo feminine">
+<div class="relative w-full aspect-[4/5] rounded-[18px] bg-secondary-container/45 overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Editorial minimal 3D smooth white mannequin silhouette posing casually leaning against a mirror in a warm beige studio backdrop, soft diffused daylight, soft shadows, warm blush tonality, high fashion minimalist art direction." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCadmY6AI3DdLb0E0t1JRC3dOFOWuDypNkLh1ySaJjucUXVx6qDFuaaAKPle9MZPozSo30RANmHTrT9tSIPUIkpIQA2wKWNus7hDC6NLGYjd2dVX949SaDaA5LmYH8lNX-KVutd4zxf-4dx-u04Ez-V7Rq8Jy_Iul779_PwZYxrEQP6co4wVnmCHxnnvrwQxAfPo7PgZdGK24ouOMh-uGzUInkjpc_KLN_48lpsVFnAspFLPD9Oudg"/>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-surface-container-lowest/80 backdrop-blur-md">
+<span class="font-label-sm text-label-sm text-on-surface lowercase">94% match</span>
+</div>
+<button aria-label="save pose" class="save-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-secondary active:scale-90 transition-transform shadow-sm" data-saved="false" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="pt-2.5 pb-1 px-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface lowercase leading-snug">mirror lean</h3>
+<p class="font-body-sm text-body-sm text-secondary lowercase mt-0.5">easy • mirror</p>
+</div>
+</div>
+<div class="pose-card flex flex-col bg-surface-container-lowest rounded-[24px] p-2.5 shadow-sm hover:shadow-md transition-shadow group relative" data-category="walking couple">
+<div class="relative w-full aspect-[4/5] rounded-[18px] bg-tertiary-fixed/60 overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Modern minimalist aesthetic duo of white mannequins in a walking mid-stride pose holding hands on a soft pale sage green backdrop, clean shadows, cinematic natural sunlight, fine art editorial styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkVdBbUhKE2VLbkmEx59NRkN4D6AvyDuJmt09XgpNeRRLb89UKOiXJs5etx9OmD4rSzGOj-oON1YWnLmIT5CBBR9LFI73LIxanmNbhuAHqfWUmRHGFZLc9qVE5_87wWei7dvlOalUmhO033z0NoMqTevyPm7q80T0mdZMDM_xz6kT1yXLWm-L1TVJyHsTNEHc-dsnLF5I_XaxPQkKDaFBx-Jd5aHJGUJ7jZRm6Bk4wK58pzTRYM_U"/>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-surface-container-lowest/80 backdrop-blur-md">
+<span class="font-label-sm text-label-sm text-on-surface lowercase">natural</span>
+</div>
+<button aria-label="save pose" class="save-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-secondary active:scale-90 transition-transform shadow-sm" data-saved="true" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="pt-2.5 pb-1 px-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface lowercase leading-snug">walking together</h3>
+<p class="font-body-sm text-body-sm text-secondary lowercase mt-0.5">candid • couple</p>
+</div>
+</div>
+<div class="pose-card flex flex-col bg-surface-container-lowest rounded-[24px] p-2.5 shadow-sm hover:shadow-md transition-shadow group relative" data-category="sitting solo">
+<div class="relative w-full aspect-[4/5] rounded-[18px] bg-surface-container-high overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Chic 3D smooth matte cream mannequin figure casually seated on stone stairs with one elbow resting on knee, soft warm oat neutral studio lighting, elegant posture, minimalist high aesthetic mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBODtXJB9ZXWfBJ52SzH-qORmIEYqbE8LK_-UzsIDI2LrQr7GtsKM5Asht6HpGbhDvlJa7mhvi7jXIZ_01uTQqaLQSwJyBw830w4M66SQLZeNvPvnPu2rbKPvs4S_qK8lzCKAy_sG8ITLNLVODtTjrfS0DTOsidowm_uGvc_WGzwotHz5-w8Upf_bB28J39sdiAQZQdQNhBmZ3uufGHehbD4src-XKcQUMul3e6u01QzewEqXufyTE"/>
+<button aria-label="save pose" class="save-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-secondary active:scale-90 transition-transform shadow-sm" data-saved="false" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="pt-2.5 pb-1 px-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface lowercase leading-snug">on the stairs</h3>
+<p class="font-body-sm text-body-sm text-secondary lowercase mt-0.5">relaxed • sitting</p>
+</div>
+</div>
+<div class="pose-card flex flex-col bg-surface-container-lowest rounded-[24px] p-2.5 shadow-sm hover:shadow-md transition-shadow group relative" data-category="solo masculine walking">
+<div class="relative w-full aspect-[4/5] rounded-[18px] bg-secondary-fixed/50 overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Minimalist stylized white mannequin silhouette standing side-profile with one hand casually slipped into a pocket, soft ambient morning illumination, pastel peach-oat studio backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjQrmVq5W6mqaIO2MiX22I5g5uL9OuGIxjfKg9T6k0pA3QYmlSSTGQD97blWHKQq5OP36pnWPaznUVYkufFGSli-315Ey2LL1w5PeY3FgZpnzirclrgTw9skEUs_pM3H8m_CQ8QlSjuing5jc57NeJ7H-zSvYlgaKup8z4YnCawBGUE5zkoAn77rRfBqINWCjQMI6GYIswr4aZUgAufsbshCuzGrHBNpCMPJegXrhYk4UjaLRwqt4"/>
+<button aria-label="save pose" class="save-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-secondary active:scale-90 transition-transform shadow-sm" data-saved="false" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="pt-2.5 pb-1 px-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface lowercase leading-snug">hand in pocket</h3>
+<p class="font-body-sm text-body-sm text-secondary lowercase mt-0.5">effortless • solo</p>
+</div>
+</div>
+<div class="pose-card flex flex-col bg-surface-container-lowest rounded-[24px] p-2.5 shadow-sm hover:shadow-md transition-shadow group relative" data-category="mirror selfie feminine">
+<div class="relative w-full aspect-[4/5] rounded-[18px] bg-surface-container-low overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Soft light gray ceramic mannequin sculpture holding hair up loosely with one hand in an artistic mirror selfie framing, warm milk and honey lighting, dreamy soft depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4Ca7MhQZqx1lnHO-EGnIs7f7Goec46qq7xoC7eJ46CV3YMcVufRr_fXbplb3R7dfyUZx3AzwwWVdU1_jItJGCZ2fs-uxUQDOS3jzvUrrZ7IAyUU2xys6BmE7GUA2whRWl66kZMHEN3xhfUX1NBb9_a-fW950dNKi1GkhMtEVPWgkbcQDckpf9mD3HcTbo-UWfvgpboVyyzpEmxtRdTZMWRE65iArTVorMCX0HROeFYRadOIDEz-Y"/>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container">
+<span class="font-label-sm text-label-sm lowercase">trending</span>
+</div>
+<button aria-label="save pose" class="save-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-secondary active:scale-90 transition-transform shadow-sm" data-saved="true" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="pt-2.5 pb-1 px-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface lowercase leading-snug">mirror, hair up</h3>
+<p class="font-body-sm text-body-sm text-secondary lowercase mt-0.5">chic • mirror</p>
+</div>
+</div>
+<div class="pose-card flex flex-col bg-surface-container-lowest rounded-[24px] p-2.5 shadow-sm hover:shadow-md transition-shadow group relative" data-category="solo walking sitting">
+<div class="relative w-full aspect-[4/5] rounded-[18px] bg-tertiary-fixed-dim/40 overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Editorial minimal mannequin figure holding a ceramic coffee cup outdoors near a bistro chair, warm cream linen backdrop, morning cafe daylight, soft gentle shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAII6cpkKfo8f_NvN8tnCJlFNFp7Fdous-0gMxlsETjTRH9kbfTMrYUPnvjQzTnNB7wPkStbzTGqsex9rLzVt6ne875aa1AbKAHRRfs2iORGawRdwplFtNtMNaZSrlLtci8KSrSvT80teoFbJqFIF0MJAf61tJ5M6lqCU-naF8wDWVOFpXrfMmOiiGj7HR4K1kX8F_OPoQVSpqU80sSrj3Xd8Gl4SKH7JHKgyT6JgvfrjQGSQLSbMc"/>
+<button aria-label="save pose" class="save-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-secondary active:scale-90 transition-transform shadow-sm" data-saved="false" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="pt-2.5 pb-1 px-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface lowercase leading-snug">coffee in hand</h3>
+<p class="font-body-sm text-body-sm text-secondary lowercase mt-0.5">cafe • candid</p>
+</div>
+</div>
+<div class="pose-card flex flex-col bg-surface-container-lowest rounded-[24px] p-2.5 shadow-sm hover:shadow-md transition-shadow group relative" data-category="selfie solo masculine">
+<div class="relative w-full aspect-[4/5] rounded-[18px] bg-secondary-container/30 overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Artistic 3D minimal white figure gently pulling down tortoiseshell sunglasses with two fingers, gaze over the rim, warm golden hour sunbeams, editorial fashion portrait style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUSt2YuvQsPJuYRrnUceldw51brVDxKtf2SVGF4zjomskOFDpOT1ompJc96xtUPLWbKbXo6qV6G25RQd_vbGOyWPJHGi4DtP2QvEGMJZ0KCpMoJWmcwAzCKAQSxO_VZug0Z_1NP7v-PwpEimoWvdYaWfZlMwgkx9UePI9Gb2waIh79xTPpq-czsasEpLU6TPTsXxd4pP1lpHCl6BlbQKKOzhbGx3YcWKFnnW7MUwYAPKsXVHAoHy8"/>
+<button aria-label="save pose" class="save-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-secondary active:scale-90 transition-transform shadow-sm" data-saved="false" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="pt-2.5 pb-1 px-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface lowercase leading-snug">sunnies off</h3>
+<p class="font-body-sm text-body-sm text-secondary lowercase mt-0.5">playful • solo</p>
+</div>
+</div>
+<div class="pose-card flex flex-col bg-surface-container-lowest rounded-[24px] p-2.5 shadow-sm hover:shadow-md transition-shadow group relative" data-category="sitting solo feminine">
+<div class="relative w-full aspect-[4/5] rounded-[18px] bg-surface-container overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Minimalist soft white mannequin silhouette reclining gently on a boucle lounge seat, legs draped comfortably, gentle shadows, warm neutral editorial background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc3uwRTm5UXNFZIgF7ZhGRPPoKhRl3k9iyXXl_os2RNQ1oV-V8Sp6_YXukXqdR3Y-xvG69qw9BpQKqrjGIPquJgzqElKQ5s824dxEXa36kYFU0p4Tl8RHlr9pzsGlNVKg7sUdGIQrLUoCKG1Vho4dBFyD9pdHn6KBMTsss6LByX6vo8UGQmcWqOtLdeuXNhs3--lfCKI_09YoOTt_MKhk6BUWcXIXSSb-rnlJH_PPSJF4ke-imHlY"/>
+<button aria-label="save pose" class="save-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-secondary active:scale-90 transition-transform shadow-sm" data-saved="false" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="pt-2.5 pb-1 px-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface lowercase leading-snug">lounging</h3>
+<p class="font-body-sm text-body-sm text-secondary lowercase mt-0.5">cozy • sitting</p>
+</div>
+</div>
+</div>
+<div class="hidden px-margin-mobile py-12 flex flex-col items-center justify-center text-center" id="emptySearchState">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-secondary mb-3">
+<span class="material-symbols-outlined text-[28px]">search_off</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface lowercase">no matching poses yet</h3>
+<p class="font-body-sm text-body-sm text-secondary lowercase mt-1 max-w-[240px]">
+      try searching for "mirror", "walking", or tap reset to see all 350+ angles
+    </p>
+<button class="mt-4 px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md lowercase" id="resetSearchBtn" type="button">
+      show all poses
+    </button>
+</div>
+<div class="mx-margin-mobile mt-6 p-4 rounded-[24px] bg-surface-container-low flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0 text-on-primary-fixed">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">tips_and_updates</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline-sm text-headline-sm text-on-surface lowercase leading-tight">live camera guide</h4>
+<p class="font-body-sm text-body-sm text-secondary lowercase truncate mt-0.5">tap any pose to overlay its transparent silhouette in your viewfinder</p>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const searchInput = document.getElementById('poseSearchInput');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const filterChips = document.querySelectorAll('.chip-filter');
+    const cards = document.querySelectorAll('.pose-card');
+    const emptyState = document.getElementById('emptySearchState');
+    const resetBtn = document.getElementById('resetSearchBtn');
+    const shuffleBtn = document.getElementById('shuffleBtn');
+    const grid = document.getElementById('poseGrid');
+
+    let activeFilter = 'all';
+
+    function filterCards() {
+      const query = (searchInput.value || '').trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const tags = card.querySelector('p').textContent.toLowerCase();
+        const categoryData = card.getAttribute('data-category') || '';
+        
+        const matchesFilter = (activeFilter === 'all') || categoryData.includes(activeFilter);
+        const matchesSearch = !query || title.includes(query) || tags.includes(query) || categoryData.includes(query);
+
+        if (matchesFilter && matchesSearch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (visibleCount === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+      }
+
+      if (query.length > 0) {
+        clearBtn.classList.remove('hidden');
+        clearBtn.classList.add('flex');
+      } else {
+        clearBtn.classList.add('hidden');
+        clearBtn.classList.remove('flex');
+      }
+    }
+
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => {
+          c.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+          c.classList.add('bg-surface-container-low', 'text-secondary');
+          const badge = c.querySelector('span:last-child');
+          if (badge) {
+            badge.className = 'px-1.5 py-0.5 rounded-full bg-surface-variant text-[10px] font-label-sm';
+          }
+        });
+
+        chip.classList.remove('bg-surface-container-low', 'text-secondary');
+        chip.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+        const activeBadge = chip.querySelector('span:last-child');
+        if (activeBadge) {
+          activeBadge.className = 'px-1.5 py-0.5 rounded-full bg-on-primary-container/15 text-[10px] font-label-sm';
+        }
+
+        activeFilter = chip.getAttribute('data-filter');
+        filterCards();
+      });
+    });
+
+    searchInput.addEventListener('input', filterCards);
+
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      filterCards();
+      searchInput.focus();
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        const allChip = document.querySelector('[data-filter="all"]');
+        if (allChip) allChip.click();
+      });
+    }
+
+    if (shuffleBtn && grid) {
+      shuffleBtn.addEventListener('click', () => {
+        const cardArray = Array.from(cards);
+        for (let i = cardArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          grid.appendChild(cardArray[j]);
+        }
+      });
+    }
+
+    document.querySelectorAll('.save-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isSaved = btn.getAttribute('data-saved') === 'true';
+        const icon = btn.querySelector('.material-symbols-outlined');
+        
+        if (isSaved) {
+          btn.setAttribute('data-saved', 'false');
+          icon.style.fontVariationSettings = "'FILL' 0";
+          icon.classList.remove('text-primary');
+          icon.classList.add('text-secondary');
+        } else {
+          btn.setAttribute('data-saved', 'true');
+          icon.style.fontVariationSettings = "'FILL' 1";
+          icon.classList.remove('text-secondary');
+          icon.classList.add('text-primary');
+          
+          btn.classList.add('scale-125');
+          setTimeout(() => btn.classList.remove('scale-125'), 200);
+        }
+      });
+    });
+  })();
+</script></main><div class="fixed bottom-0 inset-x-0 pointer-events-none z-50 pb-safe"><div class="w-full max-w-md mx-auto px-margin-mobile pb-6"><nav class="pointer-events-auto relative w-full h-16 bg-surface-container-lowest/95 backdrop-blur-xl rounded-full px-space-xs flex items-center justify-between shadow-[0_12px_32px_-4px_rgba(30,26,22,0.08),0_4px_12px_-2px_rgba(30,26,22,0.03)] ring-1 ring-surface-variant/60" data-active-classes="text-on-surface font-semibold"><div class="flex items-center justify-around flex-1 pl-space-xs"><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-sm text-label-sm tracking-tight lowercase mt-0.5">home</span></a><a aria-current="page" class="flex flex-col items-center justify-center w-14 h-14 transition-colors text-on-surface font-semibold" data-path="poses" href="#"><span class="material-symbols-outlined text-[22px]">accessibility_new</span><span class="font-label-sm text-label-sm tracking-tight lowercase mt-0.5">poses</span></a></div><div class="relative -top-3 flex items-center justify-center px-space-xs"><button aria-label="open camera" class="w-[58px] h-[58px] rounded-full bg-primary-container text-on-primary-fixed flex items-center justify-center shadow-[0_10px_24px_-2px_rgba(217,164,65,0.40),0_4px_8px_-1px_rgba(217,164,65,0.25)] active:scale-95 transition-transform duration-150 ease-out focus:outline-none" type="button"><span class="material-symbols-outlined text-[26px]">photo_camera</span></button></div><div class="flex items-center justify-around flex-1 pr-space-xs"><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="best-shots" href="#"><span class="material-symbols-outlined text-[22px]">photo_library</span><span class="font-label-sm text-label-sm tracking-tight lowercase mt-0.5">best shots</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="profile" href="#"><span class="material-symbols-outlined text-[22px]">person</span><span class="font-label-sm text-label-sm tracking-tight lowercase mt-0.5">profile</span></a></div></nav></div></div></body></html>

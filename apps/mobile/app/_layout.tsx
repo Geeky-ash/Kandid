@@ -7,7 +7,7 @@ import { colors } from '@kandid/ui-tokens';
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <StatusBar style="dark" backgroundColor={colors.background.primary} />
+      <StatusBar style="dark" />
       <Stack
         screenOptions={{
           headerShown: false,
@@ -16,6 +16,14 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="onboarding" options={{ headerShown: false, animation: 'fade' }} />
+        <Stack.Screen
+          name="pose/[id]"
+          options={{
+            headerShown: false,
+            animation: 'slide_from_right',
+          }}
+        />
         <Stack.Screen
           name="camera"
           options={{

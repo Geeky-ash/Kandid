@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-variant": "#eae1da", "on-tertiary-fixed": "#131e15", "surface": "#fff8f4", "error": "#ba1a1a", "tertiary-fixed": "#d9e6d8", "on-primary-fixed": "#271900", "surface-bright": "#fff8f4", "inverse-surface": "#34302b", "secondary-fixed-dim": "#d8c2bc", "secondary-fixed": "#f5ddd7", "on-primary": "#ffffff", "error-container": "#ffdad6", "tertiary-fixed-dim": "#bdcabc", "on-error": "#ffffff", "surface-container-high": "#f0e6e0", "outline": "#817564", "surface-dim": "#e1d8d2", "outline-variant": "#d3c4b1", "inverse-primary": "#f5bd58", "tertiary": "#556156", "on-surface-variant": "#4f4536", "primary": "#7d5700", "surface-tint": "#7d5700", "on-secondary-container": "#705f5a", "on-error-container": "#93000a", "background": "#fff8f4", "on-tertiary": "#ffffff", "on-tertiary-fixed-variant": "#3e4a3f", "on-background": "#1f1b17", "on-surface": "#1f1b17", "inverse-on-surface": "#f9efe8", "surface-container-lowest": "#ffffff", "secondary": "#6c5a56", "on-primary-container": "#573c00", "on-tertiary-container": "#384339", "on-primary-fixed-variant": "#5f4100", "secondary-container": "#f2dbd5", "surface-container": "#f6ece5", "tertiary-container": "#a3b0a3", "surface-container-highest": "#eae1da", "on-secondary-fixed": "#251915", "primary-container": "#d9a441", "primary-fixed-dim": "#f5bd58", "primary-fixed": "#ffdeaa", "surface-container-low": "#fcf2eb", "on-secondary-fixed-variant": "#53433f", "on-secondary": "#ffffff" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "space-xs": "0.25rem", "space-sm": "0.5rem", "margin": "1.25rem", "space-xl": "2rem", "gutter": "1rem", "margin-mobile": "1rem", "space-lg": "1.5rem", "gutter-sm": "0.75rem", "space-md": "1rem" }, fontFamily: { "label-sm": ["Plus Jakarta Sans"], "headline-md": ["Playfair Display"], "headline-xl-mobile": ["Playfair Display"], "body-lg": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "headline-sm": ["Playfair Display"], "body-sm": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-lg": ["Playfair Display"], "headline-xl": ["Playfair Display"], "label-md": ["Plus Jakarta Sans"] }, fontSize: { "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.02em", fontWeight: "500" }], "headline-md": ["22px", { lineHeight: "30px", letterSpacing: "0em", fontWeight: "600" }], "headline-xl-mobile": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600" }], "body-lg": ["17px", { lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }], "headline-sm": ["18px", { lineHeight: "26px", letterSpacing: "0em", fontWeight: "600" }], "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }], "body-md": ["15px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }], "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-xl": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "600" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }] } } } };</script><style>@layer base { html, body { width: 100%; min-height: 100%; margin: 0; padding: 0; } body { overscroll-behavior: none; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } } ::-webkit-scrollbar { display: none; } body { min-height: max(884px, 100dvh); }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 px-margin-mobile flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="photogenik" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WAMbJQngfscvZm5ywjjzdFKVBP0tQMSReUw9mUF37d2_QBCbCQQfUiV5-hdxToz4lxt8BAiYQx94iUiheGL0L4Vun3ZqE9nc5-fP_IjlVLxQQCslTZN_7auDvrMEPiM_kod4cuT6AZmlNvi1BSanipE2r-d9ujQL4MreiwnFqOO-rgQ9hDgiqGfQ-iEnBcMKukKIpm747fi0af6t7aUVkD5vwZRKZaNw2CuDzHdGG7IfLzwnyDSCnk"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight lowercase">photogenik</span></div><div class="flex items-center gap-space-sm"><span class="font-label-sm text-label-sm text-on-surface-variant lowercase hidden sm:inline">Photogenik   Profile</span><a class="relative flex items-center justify-center p-0.5 rounded-full hover:opacity-85 transition-opacity" data-path="photogenik - profile" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-surface-variant" src="https://lh3.googleusercontent.com/aida/AEtjO1WD8RZUMYgthBoLy8SjvhBrXI7Kg1OxJSczk-JdoF3WwiquV9h2ID4N8hNOeugOJ8aT9hrmJPdCP6gxjWcJkk_s93ymRDduTto7Ak0xxJKrIuDu91Ow1_ux2ke0pjdJ0HpxmPQHmYc86h30U4SggzR36I37iN06kMGD-IQzNn93xVIXhh5MVR1P5d53ctROvf3mF9k8dpglUF28R5JAHedGNgUuSElnvPZXjQcrxQvMS641LMA5euZV"/></a></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 bg-surface"><div class="flex flex-col w-full px-margin-mobile pb-8 space-y-6">
+<!-- Top Action & Mini Editorial Intro -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center space-x-2">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container">
+<span class="material-symbols-outlined text-[16px]">arrow_back_ios_new</span>
+</span>
+<span class="font-headline-sm text-headline-sm text-on-surface lowercase">creator studio</span>
+</div>
+<div class="flex items-center space-x-2">
+<button aria-label="share profile" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+</button>
+<button aria-label="edit account" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Profile Card -->
+<div class="bg-surface-container-lowest rounded-lg p-5 shadow-[0_4px_16px_-2px_rgba(30,26,22,0.04),0_2px_6px_-1px_rgba(30,26,22,0.02)] flex flex-col items-center text-center relative overflow-hidden">
+<div class="absolute -top-12 -right-12 w-36 h-36 bg-secondary-fixed/40 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-10 -left-10 w-28 h-28 bg-primary-fixed/30 rounded-full blur-xl pointer-events-none"></div>
+<div class="relative mb-3">
+<img class="w-24 h-24 rounded-full object-cover shadow-sm ring-4 ring-surface-container" data-alt="Warm aesthetic candid mirror portrait of a stylish young brunette woman creator wearing an oversized natural linen shirt with subtle gold jewelry in sunlit loft studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaYcHyd2W1cb97ZiCs1vqr5bruq6jOXsw6cs11UnNieG9RYbfnO8c95qTxji-o0jaHh3ebg1vetlG0vhlrDbAD_NIrkHBc6uK23zisaXYq7ELc6EfkHK_JMYxNyBq6BrnfjO14_SNFaEFk81KbChaV69zDFLUyVTLafJfDrAdBncq4p7S4g1OMVr1YXyrHzSM5kU63JidPRSsMGTv04HMmGqVyBatmFmh-n9IoUR0AB_m0Inn0sio"/>
+<span class="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-primary-container text-on-primary-fixed flex items-center justify-center text-[13px] shadow">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</span>
+</div>
+<div class="flex flex-col items-center space-y-1">
+<div class="flex items-center space-x-2">
+<h1 class="font-headline-md text-headline-md text-on-surface lowercase">maya lin</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary-fixed font-label-sm text-label-sm lowercase">pro member</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase">@mayashoots • amsterdam / paris</p>
+<p class="font-body-sm text-body-sm text-on-surface/80 lowercase pt-1 max-w-[260px]">
+        curating effortless natural light, linen staples &amp; candid editorial angles.
+      </p>
+</div>
+<div class="flex items-center gap-2 mt-4 w-full">
+<button class="flex-1 h-10 rounded-full bg-primary-container text-on-primary-fixed font-label-lg text-label-lg lowercase flex items-center justify-center space-x-1.5 active:scale-97 transition-transform" type="button">
+<span class="material-symbols-outlined text-[17px]">edit</span>
+<span>edit bio</span>
+</button>
+<button class="h-10 px-4 rounded-full bg-secondary-container text-on-secondary-container font-label-lg text-label-lg lowercase flex items-center justify-center active:scale-97 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
+</button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="bg-surface-container-lowest rounded-lg p-4 shadow-[0_4px_16px_-2px_rgba(30,26,22,0.04),0_2px_6px_-1px_rgba(30,26,22,0.02)] grid grid-cols-3 divide-none text-center">
+<div class="flex flex-col items-center justify-center py-1">
+<span class="font-headline-md text-headline-md text-on-surface leading-tight">28</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase mt-0.5">shoots</span>
+</div>
+<div class="flex flex-col items-center justify-center py-1 bg-surface-container-low/60 rounded-xl">
+<span class="font-headline-md text-headline-md text-primary leading-tight">42</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase mt-0.5">saved poses</span>
+</div>
+<div class="flex flex-col items-center justify-center py-1">
+<span class="font-headline-md text-headline-md text-on-surface leading-tight">184</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase mt-0.5">best shots</span>
+</div>
+</div>
+<!-- My Shoots Horizontal Carousels -->
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface lowercase">my shoots</span>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm lowercase">active albums</span>
+</div>
+<a class="font-label-sm text-label-sm text-primary hover:opacity-80 lowercase flex items-center" href="#">
+<span>see all (12)</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+<!-- Scrollable Reel -->
+<div class="flex space-x-3 overflow-x-auto pb-2 -mx-margin-mobile px-margin-mobile snap-x scrollbar-none">
+<!-- Shoot Card 1 -->
+<div class="shrink-0 w-44 rounded-lg bg-surface-container-lowest overflow-hidden shadow-[0_4px_16px_-2px_rgba(30,26,22,0.04)] snap-start">
+<div class="relative h-48 w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Chic sunlit canal side cafe in Amsterdam with warm latte on wooden table, girl in neutral beige trench coat posing naturally in golden morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGj20q71Ah8bpIL8cqROWE26io4ohugTwlHcSB-42ZCfD9XPg4QFZp6bqjZM5zGs7d4r5EGrmZEgpzAxQAnmTMdM9yJ-fM4PCFecVZCYaPMcU0HuLTWU2qJbGa5jX1MBiGarmtu7MRnstDhaYhpR2LGPwggcO8tTOd5wzqnGul7QJX7AskbBbJ3VTK3nIXc1UlkjiEfiYQON_kcM97q_P2XQoLdBb2xMCKPsSdBXJ91qchjpBJrG0"/>
+<span class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface font-label-sm text-label-sm lowercase shadow-sm">
+            6 kept
+          </span>
+<span class="absolute bottom-2.5 right-2.5 w-7 h-7 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px]">favorite</span>
+</span>
+</div>
+<div class="p-3">
+<h2 class="font-headline-sm text-headline-sm text-on-surface lowercase truncate">café amsterdam</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase mt-0.5">oct 14 • 4 poses</p>
+</div>
+</div>
+<!-- Shoot Card 2 -->
+<div class="shrink-0 w-44 rounded-lg bg-surface-container-lowest overflow-hidden shadow-[0_4px_16px_-2px_rgba(30,26,22,0.04)] snap-start">
+<div class="relative h-48 w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Editorial Parisian golden hour street portrait near Pont Alexandre III with warm hazy sunlight illuminating a woman in crisp tailored linen suit smiling naturally" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2R9dfRnjubHAvCI5nrv86zXDzwm6tJbBFCEucreOijF6wEMpBi4tkzdOdC4Tb7RRdet4MaRu0pqYcmpgh2N-g8VjBXndgX_TrV9hIpiilVTsKocO147dsrnVUvXhGmZiydQ3rKN8MwOjagti-oJdVyUMYKfNvjbvNqtBW1fy8SEo0BfHlhx8JO9laF8JQeLBIyR3ox_7dMNkVsIMjzxgvYCrZhln5hXgLXhnDv2QQtqQZ3VrlQYM"/>
+<span class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface font-label-sm text-label-sm lowercase shadow-sm">
+            14 kept
+          </span>
+<span class="absolute bottom-2.5 right-2.5 w-7 h-7 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+</span>
+</div>
+<div class="p-3">
+<h2 class="font-headline-sm text-headline-sm text-on-surface lowercase truncate">paris golden hour</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase mt-0.5">sep 29 • 8 poses</p>
+</div>
+</div>
+<!-- Shoot Card 3 -->
+<div class="shrink-0 w-44 rounded-lg bg-surface-container-lowest overflow-hidden shadow-[0_4px_16px_-2px_rgba(30,26,22,0.04)] snap-start">
+<div class="relative h-48 w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="High-key minimal indoor selfie in full-length ornate standing mirror, soft linen drapes, potted fiddle leaf fig plant and warm neutral earth tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbxPXeO_wIZ01ozlyB_6ZpQY2BR2w4Y1hNMz5uQnoe5R4kBfDKZHSiKEq3s6zQ7AbtHlafArBVtZzwUnQPF2l8-HLdQLp9FKqJZxMqEMRf7ZDpdQGPwJhipNIPM2jvRNzKksoM4QPXcntxNY0F5CKHNe6BWZlOCa56bYN3hrMiRLzyc2nYAZjmaP7RZnGYuIQt-o02C8VPG9GAtCqJ2W6nZ9R2fCDHKEgmOD84jBzCN1K3K_FvBm4"/>
+<span class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface font-label-sm text-label-sm lowercase shadow-sm">
+            8 kept
+          </span>
+<span class="absolute bottom-2.5 right-2.5 w-7 h-7 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px]">lock_open</span>
+</span>
+</div>
+<div class="p-3">
+<h2 class="font-headline-sm text-headline-sm text-on-surface lowercase truncate">mirror series #04</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase mt-0.5">sep 18 • 5 poses</p>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Settings Section -->
+<div class="space-y-2.5">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-md text-label-md text-on-surface-variant tracking-wider lowercase">ai permissions</span>
+<span class="font-label-sm text-label-sm text-primary lowercase flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+        neural engine online
+      </span>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-2 shadow-[0_4px_16px_-2px_rgba(30,26,22,0.04)] space-y-1">
+<!-- Toggle 1 -->
+<div class="p-3 rounded-DEFAULT flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-start space-x-3 pr-2">
+<span class="w-9 h-9 rounded-full bg-primary-fixed/40 text-on-primary-fixed flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]">headset_mic</span>
+</span>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface lowercase">cloud coaching</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase mt-0.5">enables live whisper cues via headphones</p>
+</div>
+</div>
+<button aria-checked="true" class="toggle-btn w-12 h-7 bg-primary-container rounded-full p-0.5 relative transition-colors shrink-0" role="switch" type="button">
+<span class="toggle-dot w-6 h-6 bg-surface-container-lowest rounded-full block shadow-sm transform translate-x-5 transition-transform"></span>
+</button>
+</div>
+<!-- Toggle 2 -->
+<div class="p-3 rounded-DEFAULT flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-start space-x-3 pr-2">
+<span class="w-9 h-9 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</span>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface lowercase">best shots</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase mt-0.5">automatic duplicate &amp; blink detection</p>
+</div>
+</div>
+<button aria-checked="true" class="toggle-btn w-12 h-7 bg-primary-container rounded-full p-0.5 relative transition-colors shrink-0" role="switch" type="button">
+<span class="toggle-dot w-6 h-6 bg-surface-container-lowest rounded-full block shadow-sm transform translate-x-5 transition-transform"></span>
+</button>
+</div>
+</div>
+</div>
+<!-- General Settings Section -->
+<div class="space-y-2.5">
+<div class="px-1">
+<span class="font-label-md text-label-md text-on-surface-variant tracking-wider lowercase">preferences &amp; support</span>
+</div>
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_4px_16px_-2px_rgba(30,26,22,0.04)] divide-y-0">
+<!-- Setting Item: Language -->
+<button class="w-full p-3.5 flex items-center justify-between text-left hover:bg-surface-container-low transition-colors" type="button">
+<div class="flex items-center space-x-3">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">translate</span>
+</span>
+<span class="font-label-lg text-label-lg text-on-surface lowercase">language</span>
+</div>
+<div class="flex items-center space-x-1.5 text-on-surface-variant">
+<span class="font-body-sm text-body-sm lowercase">english (us)</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</div>
+</button>
+<!-- Setting Item: Voice -->
+<button class="w-full p-3.5 flex items-center justify-between text-left hover:bg-surface-container-low transition-colors" type="button">
+<div class="flex items-center space-x-3">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">record_voice_over</span>
+</span>
+<span class="font-label-lg text-label-lg text-on-surface lowercase">audio voice</span>
+</div>
+<div class="flex items-center space-x-1.5 text-on-surface-variant">
+<span class="font-body-sm text-body-sm lowercase">sofia • warm &amp; calm</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</div>
+</button>
+<!-- Setting Item: Support -->
+<button class="w-full p-3.5 flex items-center justify-between text-left hover:bg-surface-container-low transition-colors" type="button">
+<div class="flex items-center space-x-3">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">contact_support</span>
+</span>
+<span class="font-label-lg text-label-lg text-on-surface lowercase">support &amp; feedback</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">chevron_right</span>
+</button>
+<!-- Setting Item: Terms -->
+<button class="w-full p-3.5 flex items-center justify-between text-left hover:bg-surface-container-low transition-colors" type="button">
+<div class="flex items-center space-x-3">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</span>
+<span class="font-label-lg text-label-lg text-on-surface lowercase">terms of service</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">chevron_right</span>
+</button>
+<!-- Setting Item: Privacy -->
+<button class="w-full p-3.5 flex items-center justify-between text-left hover:bg-surface-container-low transition-colors" type="button">
+<div class="flex items-center space-x-3">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">shield</span>
+</span>
+<span class="font-label-lg text-label-lg text-on-surface lowercase">privacy policy</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Sign Out & App Version Footer -->
+<div class="pt-2 flex flex-col items-center space-y-3">
+<button class="w-full py-3.5 rounded-full bg-secondary-container/60 hover:bg-secondary-container text-error font-label-lg text-label-lg lowercase flex items-center justify-center space-x-1.5 transition-colors active:scale-98" type="button">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span>sign out</span>
+</button>
+<div class="flex items-center space-x-2 text-on-surface-variant/70 font-label-sm text-label-sm lowercase">
+<span>photogenik version 2.4.1</span>
+<span>•</span>
+<span>editorial edition</span>
+</div>
+</div>
+</div>
+<script>
+  // Highlight profile tab in the persistent shell bar
+  try {
+    const navItems = document.querySelectorAll('nav a[data-path]');
+    navItems.forEach(el => {
+      const label = el.querySelector('span:last-child');
+      const icon = el.querySelector('span:first-child');
+      if (label && label.textContent.trim().toLowerCase() === 'profile') {
+        el.classList.remove('text-on-surface-variant');
+        el.classList.add('text-primary');
+        if (icon) {
+          icon.style.fontVariationSettings = "'FILL' 1";
+        }
+      }
+    });
+  } catch (err) {
+    // Graceful fallback
+  }
+
+  // Interactive micro-toggles for AI permissions
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isChecked = btn.getAttribute('aria-checked') === 'true';
+      const dot = btn.querySelector('.toggle-dot');
+      if (isChecked) {
+        btn.setAttribute('aria-checked', 'false');
+        btn.classList.remove('bg-primary-container');
+        btn.classList.add('bg-surface-variant');
+        dot.classList.remove('translate-x-5');
+        dot.classList.add('translate-x-0.5');
+      } else {
+        btn.setAttribute('aria-checked', 'true');
+        btn.classList.add('bg-primary-container');
+        btn.classList.remove('bg-surface-variant');
+        dot.classList.add('translate-x-5');
+        dot.classList.remove('translate-x-0.5');
+      }
+    });
+  });
+</script></main><div class="fixed bottom-0 inset-x-0 pointer-events-none z-50 pb-safe"><div class="w-full max-w-md mx-auto px-margin-mobile pb-6"><nav class="pointer-events-auto relative w-full h-16 bg-surface-container-lowest/95 backdrop-blur-xl rounded-full px-space-xs flex items-center justify-between shadow-[0_12px_32px_-4px_rgba(30,26,22,0.08),0_4px_12px_-2px_rgba(30,26,22,0.03)] ring-1 ring-surface-variant/60" data-active-classes="text-on-surface font-semibold"><div class="flex items-center justify-around flex-1 pl-space-xs"><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="photogenik - choose your camera" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-sm text-label-sm tracking-tight lowercase mt-0.5">home</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="photogenik - pose library" href="#"><span class="material-symbols-outlined text-[22px]">accessibility_new</span><span class="font-label-sm text-label-sm tracking-tight lowercase mt-0.5">poses</span></a></div><div class="relative -top-3 flex items-center justify-center px-space-xs"><a aria-label="open camera" class="w-[58px] h-[58px] rounded-full bg-primary-container text-on-primary-fixed flex items-center justify-center shadow-[0_10px_24px_-2px_rgba(217,164,65,0.40),0_4px_8px_-1px_rgba(217,164,65,0.25)] active:scale-95 transition-transform duration-150 ease-out focus:outline-none" data-path="photogenik - camera with visual guide" href="#"><span class="material-symbols-outlined text-[26px]">photo_camera</span></a></div><div class="flex items-center justify-around flex-1 pr-space-xs"><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="photogenik - best shots" href="#"><span class="material-symbols-outlined text-[22px]">photo_library</span><span class="font-label-sm text-label-sm tracking-tight lowercase mt-0.5">best shots</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="photogenik - profile" href="#"><span class="material-symbols-outlined text-[22px]">person</span><span class="font-label-sm text-label-sm tracking-tight lowercase mt-0.5">profile</span></a></div></nav></div></div></body></html>

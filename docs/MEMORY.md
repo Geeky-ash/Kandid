@@ -6,8 +6,8 @@
 
 ## 1. current status
 
-- **phase**: milestone 1 completed (monorepo architecture, ui tokens, content, and navigation shell).
-- **state**: monorepo workspace initialized with npm workspaces. `@kandid/ui-tokens` and `@kandid/content` exported and typechecked with 0 errors. `@kandid/mobile` navigation shell implemented with root layout, floating pill tab bar (warm editorial glass with android solid fallback), elevated gold camera action button, and 4 tab routes + camera view. automated token drift check script verified with 0 drift.
+- **phase**: milestone 2 completed (onboarding, home screen enhancements, pose library & search, pose detail view).
+- **state**: monorepo workspace with `@kandid/ui-tokens`, `@kandid/content`, and `@kandid/mobile`. all screens for m2 implemented adhering strictly to warm editorial glass tokens (`#fcf9f4`, `#f0ede9`, `#c5a880`, `#5b7e68`, `#1c1a18`), lowercase copy, min 12px text floor, and 0 errors across typescript strict compilation.
 - **brand definition**:
   - **app name**: `kandid`
   - **tagline**: `"effortless angles for every shot."`
@@ -15,7 +15,7 @@
   - **bundle identifier / android package**: `com.kandid.app`
   - **design theme**: `"warm editorial glass"` (stitch mcp project id: `931723337622910157`)
 - **active branch**: `main`.
-- **last updated**: 2026-10-19 (milestone 1 completion).
+- **last updated**: 2026-10-19 (milestone 2 completion).
 
 ---
 
@@ -25,8 +25,8 @@
 | :--- | :--- | :--- | :--- |
 | **phase 0** | 8 documentation files in `/docs/` + root pointer | **completed** | all 8 docs updated with kandid brand, stitch mcp tokens, contrast rules, safe zone docking, parametric skia mannequin, and privacy specs |
 | **m1** | monorepo setup, `@kandid/ui-tokens`, `@kandid/content`, navigation shell + floating tab bar | **completed** | workspaces initialized, packages exported, floating tab bar with elevated camera button built, token drift test 100% passing, typecheck clean (0 errors) |
-| **m2** | onboarding (paywall step), home, pose library (60–100 skeletal seed), pose detail | upcoming | planned next |
-| **m3** | camera, parametric skia overlay, docked cue cards, timer, soft light, hands-free series | pending | depends on m2 |
+| **m2** | onboarding (paywall step), home, pose library (skeletal seed), pose detail view | **completed** | onboarding flow with tilted cards, home screen with mode cards & tools, 9-category pose library with search & 2-col grid, pose detail with mannequin hero, dual cues, and action bar |
+| **m3** | camera, parametric skia overlay, docked cue cards, timer, soft light, hands-free series | upcoming | planned next |
 | **m4** | supabase auth (apple + google) + backend + best shots ai edge function (in-memory) + atomic credits | pending | depends on m3 |
 | **m5** | best shots curation ui + consent flows | pending | depends on m4 |
 | **m6** | editor / 16 gem looks with hold-to-compare | pending | depends on m3, m5 |
@@ -86,9 +86,61 @@
 
 ---
 
-## 4. open issues & next milestone (m2)
+## 4. what is built & verified (m2 deliverables)
 
-- **ready for milestone 2 (m2)**:
-  - onboarding flow (tilted collage, welcome screen, permissions, soft paywall step with 7-day free trial toggle).
-  - home mode switcher enhancements & recent shoot storage via mmkv.
-  - full pose library browsing, category filtering, search, and pose detail screen with dual cues.
+### 1. onboarding & welcome flow (`apps/mobile/app/onboarding.tsx`)
+- tilted editorial collage card layout with subtle rotative transforms (`-4deg`, `3deg`).
+- headline typography in Playfair Display (`"effortless angles for every shot."`).
+- social proof chip (`"trusted by 50,000+ creators & photographers"`).
+- primary CTA pill button (`"get started"`).
+- soft paywall skip action (`"continue as guest"`).
+- local completion state persisted via `useGuestStore` in `apps/mobile/src/stores/guestStore.ts`.
+
+### 2. home screen enhancements (`apps/mobile/app/(tabs)/index.tsx`)
+- top header: brand mark `"kandid"` in Playfair Display + `"guest mode"` pill chip.
+- hero headline: `"pick a pose, we'll guide the shot"` with warm editorial subtitle.
+- primary mode cards:
+  - `"pose camera"` (popular badge, champagne gold fill `#C5A880`, dark espresso text `#1C1A18`).
+  - `"hands-free series"` (pro badge, recurring interval timer burst description).
+- quick tools bar:
+  - `"soft light"` warm screen illumination pill trigger.
+  - `"random pose"` instant pose picker navigating directly to detail view.
+- popular poses horizontal carousel with metadata badges.
+
+### 3. pose library & search (`apps/mobile/app/(tabs)/poses.tsx`)
+- header title: `"choose a pose"`.
+- rounded search input with search icon: `"describe your shot..."`.
+- 9 category filter pills with live count badges:
+  - `[all]`, `[solo]`, `[couple]`, `[besties]`, `[mirror]`, `[sitting]`, `[walking]`, `[masc]`, `[fem]`.
+- 2-column pose grid:
+  - parametric Skia mannequin vector previews with golden joint highlights.
+  - title and category in Plus Jakarta Sans (minimum 12px font floor).
+  - interactive heart save button connected to `useGuestStore`.
+  - direct navigation to pose detail screen (`/pose/[id]`).
+
+### 4. pose detail view (`apps/mobile/app/pose/[id].tsx`)
+- top bar: back button (`←`), title in Playfair Display, heart save button.
+- hero mannequin view (`PoseHero.tsx`): dark container with subtle rule-of-thirds grid lines, centered Skia mannequin, category, difficulty, and pro badges.
+- dual cues tabs (`PoseCuesSection.tsx`):
+  - segmented tab control: `"for you"` vs `"for photographer"`.
+  - numbered cue cards (`01`, `02`, `03`...) with step badges.
+  - framing notes card: recommended lens (`1x`, `2x`), camera angle, grid anchor.
+- sticky bottom action bar (`PoseActionBar.tsx`):
+  - `"save to shoot"` outline pill toggling saved status.
+  - `"use this pose"` primary gold pill (`#C5A880` with `#1C1A18` espresso text) navigating directly to camera with `poseId`.
+
+### 5. camera route integration (`apps/mobile/app/camera.tsx`)
+- accepts `poseId` query param and dynamically loads matching active pose from seed catalog.
+- passes `topOffset={60}` to `MannequinView` to account for top bar scrim.
+
+---
+
+## 5. open issues & next milestone (m3)
+
+- **ready for milestone 3 (m3)**:
+  - camera viewfinder live hardware integration (`expo-camera` / `@shopify/react-native-skia`).
+  - real-time mannequin vector alignment overlay.
+  - docked cue card carousel in safe zone (`bottom: 120px`).
+  - countdown timer (3s / 10s) and hands-free series interval burst engine.
+  - soft light screen illumination overlay.
+

@@ -27,10 +27,16 @@ export interface JointCoordinate {
 export type PoseCategory =
   | 'all'
   | 'solo'
+  | 'couple'
+  | 'besties'
+  | 'mirror'
+  | 'sitting'
+  | 'walking'
+  | 'masc'
+  | 'fem'
   | 'duo'
   | 'seated'
   | 'standing'
-  | 'mirror'
   | 'golden_hour'
   | 'casual'
   | 'editorial';

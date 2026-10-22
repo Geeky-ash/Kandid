@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius, space, typography } from '@kandid/ui-tokens';
-import { seedPoses } from '@kandid/content';
+import { seedPoses, getPoseById } from '@kandid/content';
 import { MannequinView } from '../src/components/camera/MannequinView';
 import { CueCard } from '../src/components/camera/CueCard';
 
@@ -11,12 +11,13 @@ const ZOOM_LEVELS = ['0.5x', '1x', '2x'] as const;
 
 export default function CameraScreen() {
   const router = useRouter();
+  const { poseId } = useLocalSearchParams<{ poseId?: string }>();
   const [activePoseIndex] = useState(0);
   const [currentCueIndex, setCurrentCueIndex] = useState(0);
   const [cueType, setCueType] = useState<'subject' | 'photographer'>('subject');
   const [zoomLevel, setZoomLevel] = useState<string>('1x');
 
-  const activePose = seedPoses[activePoseIndex] ?? seedPoses[0];
+  const activePose = (poseId ? getPoseById(poseId) : undefined) ?? seedPoses[activePoseIndex] ?? seedPoses[0];
   const cues = cueType === 'subject' ? activePose.subjectCues : activePose.photographerCues;
   const currentCue = cues[currentCueIndex % cues.length];
 
@@ -40,7 +41,7 @@ export default function CameraScreen() {
         <View style={styles.gridLineV2} />
 
         {/* parametric skia mannequin outline */}
-        <MannequinView joints={activePose.skeletonJoints} />
+        <MannequinView joints={activePose.skeletonJoints} topOffset={60} />
 
         {/* docked swipeable cue card in defined safe zone (bottom: 120px) */}
         <CueCard
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0E0D0C',
   },
   viewfinderScrim: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   gridLineH1: {
     position: 'absolute',

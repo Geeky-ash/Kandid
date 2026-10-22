@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, StyleProp, ViewStyle } from 'react-native';
 import { JointCoordinate } from '@kandid/content';
 import { colors } from '@kandid/ui-tokens';
 
@@ -7,6 +7,8 @@ export interface MannequinViewProps {
   joints: JointCoordinate[];
   width?: number;
   height?: number;
+  topOffset?: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 const BONE_CONNECTIONS: [string, string][] = [
@@ -30,11 +32,13 @@ export const MannequinView: React.FC<MannequinViewProps> = ({
   joints,
   width = Dimensions.get('window').width,
   height = Dimensions.get('window').height * 0.70,
+  topOffset = 0,
+  style,
 }) => {
   const jointMap = new Map(joints.map(j => [j.id, j]));
 
   return (
-    <View pointerEvents="none" style={[styles.canvas, { width, height }]}>
+    <View pointerEvents="none" style={[styles.canvas, { width, height, top: topOffset }, style]}>
       {/* render connecting bone lines */}
       {BONE_CONNECTIONS.map(([idA, idB], index) => {
         const a = jointMap.get(idA as JointCoordinate['id']);
@@ -84,7 +88,6 @@ export const MannequinView: React.FC<MannequinViewProps> = ({
 const styles = StyleSheet.create({
   canvas: {
     position: 'absolute',
-    top: 60,
     alignSelf: 'center',
     zIndex: 20,
   },

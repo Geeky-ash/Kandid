@@ -1,7 +1,21 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { useRouter } from 'expo-router';
 import { colors, radius, space, typography } from '@kandid/ui-tokens';
+
+export interface TabBarProps {
+  state: {
+    index: number;
+    routes: Array<{ key: string; name: string }>;
+  };
+  navigation?: {
+    emit: (event: any) => any;
+    navigate: (name: string) => void;
+  };
+  descriptors?: Record<string, any>;
+  insets?: { top: number; bottom: number; left: number; right: number };
+  navigateToTab?: (routeKey: string) => void;
+}
 
 interface TabItem {
   name: string;
@@ -19,23 +33,35 @@ const TABS_RIGHT: TabItem[] = [
   { name: 'profile', label: 'profile', iconText: '👤' },
 ];
 
-export const TabBar: React.FC<BottomTabBarProps> = ({ state, navigation }) => {
+export const TabBar: React.FC<TabBarProps> = ({
+  state,
+  navigation,
+  navigateToTab: routerNavigateToTab,
+}) => {
+  const router = useRouter();
   const currentRouteName = state.routes[state.index]?.name;
 
   const navigateToTab = (routeName: string) => {
     const isFocused = currentRouteName === routeName;
-    const event = navigation.emit({
-      type: 'tabPress',
-      target: routeName,
-      canPreventDefault: true,
-    });
-    if (!isFocused && !event.defaultPrevented) {
-      navigation.navigate(routeName);
+    if (navigation?.emit) {
+      const event = navigation.emit({
+        type: 'tabPress',
+        target: routeName,
+        canPreventDefault: true,
+      });
+      if (!isFocused && !event?.defaultPrevented) {
+        navigation.navigate(routeName);
+      }
+    } else if (routerNavigateToTab) {
+      const targetRoute = state.routes.find(r => r.name === routeName);
+      if (targetRoute && !isFocused) {
+        routerNavigateToTab(targetRoute.key);
+      }
     }
   };
 
   const openCamera = () => {
-    navigation.navigate('camera' as never);
+    router.push('/camera' as any);
   };
 
   const renderTab = (tab: TabItem) => {
