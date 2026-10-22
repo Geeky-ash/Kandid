@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
 import { colors, radius, space, typography } from '@kandid/ui-tokens';
 import { CameraPosition, ZoomLevel } from '../../stores/cameraStore';
 
@@ -18,64 +17,95 @@ const ZOOM_MULTIPLIERS: Record<ZoomLevel, number> = {
   '3x': 3.0,
 };
 
-export const VisionViewfinder: React.FC<VisionViewfinderProps> = ({
+let NativeCamera: any = null;
+let useCamDevice: any = null;
+let useCamPermission: any = null;
+
+try {
+  const VC = require('react-native-vision-camera');
+  NativeCamera = VC.Camera;
+  useCamDevice = VC.useCameraDevice;
+  useCamPermission = VC.useCameraPermission;
+} catch {
+  NativeCamera = null;
+}
+
+const FallbackViewfinder: React.FC<{
+  title: string;
+  subtitle: string;
+  onRequestPermission?: () => void;
+}> = ({ title, subtitle, onRequestPermission }) => (
+  <View style={styles.fallbackContainer}>
+    <View style={styles.fallbackAperture}>
+      <Text style={styles.apertureIcon}>📷</Text>
+    </View>
+    <Text style={styles.fallbackTitle}>{title}</Text>
+    <Text style={styles.fallbackSubtitle}>{subtitle}</Text>
+    {onRequestPermission && (
+      <TouchableOpacity style={styles.grantButton} onPress={onRequestPermission}>
+        <Text style={styles.grantButtonText}>grant camera permission</Text>
+      </TouchableOpacity>
+    )}
+  </View>
+);
+
+const ActiveCameraFeed: React.FC<VisionViewfinderProps> = ({
   position,
   zoomLevel,
   onCameraReady,
 }) => {
   const cameraRef = useRef<any>(null);
-  const { hasPermission, requestPermission } = useCameraPermission();
-  const [permissionRequested, setPermissionRequested] = useState(false);
-  const device = useCameraDevice(position);
+  const { hasPermission, requestPermission } = useCamPermission();
+  const [requested, setRequested] = useState(false);
+  const device = useCamDevice(position);
 
   useEffect(() => {
-    if (!hasPermission && !permissionRequested) {
-      setPermissionRequested(true);
+    if (!hasPermission && !requested) {
+      setRequested(true);
       requestPermission();
     }
-  }, [hasPermission, permissionRequested, requestPermission]);
+  }, [hasPermission, requested, requestPermission]);
 
-  const targetZoom = Math.max(1, ZOOM_MULTIPLIERS[zoomLevel]);
+  useEffect(() => {
+    if (device && hasPermission) onCameraReady?.();
+  }, [device, hasPermission, onCameraReady]);
 
-  // fallback if camera permission not granted or device not detected
   if (!hasPermission || !device) {
     return (
-      <View style={styles.fallbackContainer}>
-        <View style={styles.fallbackAperture}>
-          <Text style={styles.apertureIcon}>📷</Text>
-        </View>
-        <Text style={styles.fallbackTitle}>
-          {!hasPermission ? 'camera access required' : 'simulated camera feed'}
-        </Text>
-        <Text style={styles.fallbackSubtitle}>
-          {!hasPermission
+      <FallbackViewfinder
+        title={!hasPermission ? 'camera access required' : 'simulated camera feed'}
+        subtitle={
+          !hasPermission
             ? 'kandid needs camera access to guide your angles and compose shots.'
-            : 'hardware camera initialized in preview mode.'}
-        </Text>
-        {!hasPermission && (
-          <TouchableOpacity style={styles.grantButton} onPress={requestPermission}>
-            <Text style={styles.grantButtonText}>grant camera permission</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+            : 'hardware camera initialized in preview mode.'
+        }
+        onRequestPermission={!hasPermission ? requestPermission : undefined}
+      />
     );
   }
 
-  useEffect(() => {
-    if (device && hasPermission) {
-      onCameraReady?.();
-    }
-  }, [device, hasPermission, onCameraReady]);
-
   return (
-    <Camera
+    <NativeCamera
       ref={cameraRef}
       style={StyleSheet.absoluteFill}
       device={device}
       isActive={true}
-      zoom={targetZoom}
+      zoom={Math.max(1, ZOOM_MULTIPLIERS[zoomLevel])}
     />
   );
+};
+
+export const VisionViewfinder: React.FC<VisionViewfinderProps> = props => {
+  if (!NativeCamera || !useCamDevice || !useCamPermission) {
+    return (
+      <FallbackViewfinder
+        title="simulated viewfinder"
+        subtitle="previewing editorial angles and pose guidance overlay."
+      />
+    );
+  }
+
+  return <ActiveCameraFeed {...props} />;
 };
 
 const styles = StyleSheet.create({
@@ -97,9 +127,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: space.md,
   },
-  apertureIcon: {
-    fontSize: 28,
-  },
+  apertureIcon: { fontSize: 28 },
   fallbackTitle: {
     fontFamily: typography.fontFamilies.headline,
     fontSize: typography.fontSize.headlineSm,
@@ -125,6 +153,6 @@ const styles = StyleSheet.create({
     fontFamily: typography.fontFamilies.body,
     fontSize: typography.fontSize.labelSm,
     fontWeight: typography.fontWeight.bold,
-    color: colors.text.onGold, // espresso strictly on gold per WCAG AA
+    color: colors.text.onGold,
   },
 });
