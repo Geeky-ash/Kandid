@@ -41,12 +41,6 @@
     "plugins": [
       "expo-router",
       [
-        "react-native-vision-camera",
-        {
-          "cameraPermissionText": "kandid needs access to your camera to capture photos with editorial pose guidance."
-        }
-      ],
-      [
         "expo-build-properties",
         {
           "android": {
