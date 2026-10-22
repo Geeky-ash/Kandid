@@ -6,8 +6,8 @@
 
 ## 1. current status
 
-- **phase**: milestone 2 completed (onboarding, home screen enhancements, pose library & search, pose detail view).
-- **state**: monorepo workspace with `@kandid/ui-tokens`, `@kandid/content`, and `@kandid/mobile`. all screens for m2 implemented adhering strictly to warm editorial glass tokens (`#fcf9f4`, `#f0ede9`, `#c5a880`, `#5b7e68`, `#1c1a18`), lowercase copy, min 12px text floor, and 0 errors across typescript strict compilation.
+- **phase**: milestone 3 completed (camera viewfinder, skia overlays, safe zone cue cards & hands-free series).
+- **state**: monorepo workspace with `@kandid/ui-tokens`, `@kandid/content`, and `@kandid/mobile`. all screens for m1, m2, and m3 implemented adhering strictly to warm editorial glass tokens (`#fcf9f4`, `#f0ede9`, `#c5a880`, `#5b7e68`, `#1c1a18`), lowercase copy, min 12px text floor, <150 lines per file, and 0 errors across typescript strict compilation and token drift check.
 - **brand definition**:
   - **app name**: `kandid`
   - **tagline**: `"effortless angles for every shot."`
@@ -15,7 +15,7 @@
   - **bundle identifier / android package**: `com.kandid.app`
   - **design theme**: `"warm editorial glass"` (stitch mcp project id: `931723337622910157`)
 - **active branch**: `main`.
-- **last updated**: 2026-10-19 (milestone 2 completion).
+- **last updated**: 2026-10-22 (milestone 3 completion).
 
 ---
 
@@ -26,8 +26,8 @@
 | **phase 0** | 8 documentation files in `/docs/` + root pointer | **completed** | all 8 docs updated with kandid brand, stitch mcp tokens, contrast rules, safe zone docking, parametric skia mannequin, and privacy specs |
 | **m1** | monorepo setup, `@kandid/ui-tokens`, `@kandid/content`, navigation shell + floating tab bar | **completed** | workspaces initialized, packages exported, floating tab bar with elevated camera button built, token drift test 100% passing, typecheck clean (0 errors) |
 | **m2** | onboarding (paywall step), home, pose library (skeletal seed), pose detail view | **completed** | onboarding flow with tilted cards, home screen with mode cards & tools, 9-category pose library with search & 2-col grid, pose detail with mannequin hero, dual cues, and action bar |
-| **m3** | camera, parametric skia overlay, docked cue cards, timer, soft light, hands-free series | upcoming | planned next |
-| **m4** | supabase auth (apple + google) + backend + best shots ai edge function (in-memory) + atomic credits | pending | depends on m3 |
+| **m3** | camera, parametric skia overlay, docked cue cards, timer, soft light, hands-free series | **completed** | vision-camera hardware integration, dynamic lens discovery (0.5x-3x), safe zone cue cards docked at bottom: 120px, single/series hands-free burst modes, soft light 3-temp glow tool |
+| **m4** | supabase auth (apple + google) + backend + best shots ai edge function (in-memory) + atomic credits | upcoming | planned next |
 | **m5** | best shots curation ui + consent flows | pending | depends on m4 |
 | **m6** | editor / 16 gem looks with hold-to-compare | pending | depends on m3, m5 |
 | **m7** | paywall (revenuecat) + profile + privacy controls + account deletion | pending | depends on m6 |
@@ -135,12 +135,49 @@
 
 ---
 
-## 5. open issues & next milestone (m3)
+## 5. what is built & verified (m3 deliverables)
 
-- **ready for milestone 3 (m3)**:
-  - camera viewfinder live hardware integration (`expo-camera` / `@shopify/react-native-skia`).
-  - real-time mannequin vector alignment overlay.
-  - docked cue card carousel in safe zone (`bottom: 120px`).
-  - countdown timer (3s / 10s) and hands-free series interval burst engine.
-  - soft light screen illumination overlay.
+### 1. camera hardware viewfinder (`apps/mobile/src/components/camera/VisionViewfinder.tsx`)
+- integrated `react-native-vision-camera` v5 with permission request handling (`useCameraPermission`).
+- dynamic physical lens discovery with zoom support (`0.5x`, `1x`, `2x`, `3x`) and smooth digital crop fallback.
+- graceful fallback state when permissions are pending or in simulator, preventing any native crash.
+
+### 2. parametric skia mannequin & framing overlay (`apps/mobile/src/components/camera/CameraOverlay.tsx`)
+- translucent parametric Skia vector mannequin aligned directly over camera feed.
+- rule-of-thirds grid lines (`33.3%`, `66.6%`) with toggle.
+- horizon level guide / center framing anchor.
+- prominent countdown overlay with gold circular badge (`3`, `2`, `1`).
+
+### 3. safe zone cue docking (`apps/mobile/src/components/camera/CueCard.tsx`)
+- docked strictly in safe zone (`bottom: 120px`), max height 72px, leaving central 70% viewfinder clear.
+- bidirectional cue navigation (`‹` and `›`), step counts (`cue 1 of 4`).
+- instant toggle between `subjectCues[]` (`"for you"`) and `photographerCues[]` (`"for photographer"`).
+- warm dark glassmorphism styling (`rgba(28, 26, 24, 0.82)`) with Android solid fallback.
+
+### 4. hands-free series & shutter engine (`apps/mobile/src/components/camera/ShutterBar.tsx`)
+- single capture mode with 3s / 10s countdown timer.
+- interval series mode with recurring bursts (every 2s, 3s, or 5s).
+- champagne gold shutter button (`#C5A880`) with active recording status ring.
+- quick hardware zoom selector (`ZoomPillSelector.tsx`).
+- gallery thumbnail with real-time capture counter.
+- front/back camera flip.
+
+### 5. soft light illumination tool (`apps/mobile/src/components/camera/SoftLightModal.tsx`)
+- fullscreen warm screen glow modal with center cut-out window.
+- 3 color temperature options: neutral white (`#FFFBF5`), 3200K warm candlelight (`#FFD5A5`), 4500K golden hour (`#FFE6C2`).
+- 4 brightness levels: 35%, 65%, 85%, 100%.
+
+### 6. centralized camera state store (`apps/mobile/src/stores/cameraStore.ts`)
+- Zustand store managing flash, timer, grid, zoom, camera position, shutter mode, burst intervals, and capture history.
+
+---
+
+## 6. open issues & next milestone (m4)
+
+- **ready for milestone 4 (m4)**:
+  - Supabase Auth (Apple Sign-in mandatory on iOS + Google Sign-in).
+  - User profiles table and atomic credits ledger (`credits_balance`).
+  - Best Shots Cloud AI Curation Edge Function (in-memory processing with privacy consent).
+  - Merging local guest store favorites/shoots into authenticated Supabase account.
+
 
