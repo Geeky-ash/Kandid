@@ -32,6 +32,21 @@ export default function RootLayout() {
             animation: 'slide_from_bottom',
           }}
         />
+        <Stack.Screen
+          name="auth"
+          options={{
+            headerShown: false,
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+        <Stack.Screen
+          name="curation-results"
+          options={{
+            headerShown: false,
+            animation: 'slide_from_right',
+          }}
+        />
       </Stack>
     </SafeAreaProvider>
   );

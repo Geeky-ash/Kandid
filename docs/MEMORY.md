@@ -6,8 +6,8 @@
 
 ## 1. current status
 
-- **phase**: milestone 3 completed (camera viewfinder, skia overlays, safe zone cue cards & hands-free series).
-- **state**: monorepo workspace with `@kandid/ui-tokens`, `@kandid/content`, and `@kandid/mobile`. all screens for m1, m2, and m3 implemented adhering strictly to warm editorial glass tokens (`#fcf9f4`, `#f0ede9`, `#c5a880`, `#5b7e68`, `#1c1a18`), lowercase copy, min 12px text floor, <150 lines per file, and 0 errors across typescript strict compilation and token drift check.
+- **phase**: milestone 4 completed (supabase auth, credit ledger, best shots upload & cloud ai curation edge function).
+- **state**: monorepo workspace with `@kandid/ui-tokens`, `@kandid/content`, and `@kandid/mobile`. all screens and services for m1, m2, m3, and m4 implemented adhering strictly to warm editorial glass tokens (`#fcf9f4`, `#f0ede9`, `#c5a880`, `#5b7e68`, `#1c1a18`), lowercase copy, min 12px text floor, <150 lines per file, zero image retention over TLS, and 0 errors across typescript strict compilation and token drift check.
 - **brand definition**:
   - **app name**: `kandid`
   - **tagline**: `"effortless angles for every shot."`
@@ -15,7 +15,7 @@
   - **bundle identifier / android package**: `com.kandid.app`
   - **design theme**: `"warm editorial glass"` (stitch mcp project id: `931723337622910157`)
 - **active branch**: `main`.
-- **last updated**: 2026-10-22 (milestone 3 completion).
+- **last updated**: 2026-10-22 (milestone 4 completion).
 
 ---
 
@@ -27,8 +27,8 @@
 | **m1** | monorepo setup, `@kandid/ui-tokens`, `@kandid/content`, navigation shell + floating tab bar | **completed** | workspaces initialized, packages exported, floating tab bar with elevated camera button built, token drift test 100% passing, typecheck clean (0 errors) |
 | **m2** | onboarding (paywall step), home, pose library (skeletal seed), pose detail view | **completed** | onboarding flow with tilted cards, home screen with mode cards & tools, 9-category pose library with search & 2-col grid, pose detail with mannequin hero, dual cues, and action bar |
 | **m3** | camera, parametric skia overlay, docked cue cards, timer, soft light, hands-free series | **completed** | vision-camera hardware integration, dynamic lens discovery (0.5x-3x), safe zone cue cards docked at bottom: 120px, single/series hands-free burst modes, soft light 3-temp glow tool |
-| **m4** | supabase auth (apple + google) + backend + best shots ai edge function (in-memory) + atomic credits | upcoming | planned next |
-| **m5** | best shots curation ui + consent flows | pending | depends on m4 |
+| **m4** | supabase auth (apple + google) + backend + best shots ai edge function (in-memory) + atomic credits | **completed** | supabase client & session cache, atomic credit ledger with auto-refunds, auth screen (email/apple/google/guest), best shots photo picker, cloud ai edge function with zero disk retention, curation results view |
+| **m5** | best shots curation ui + consent flows | upcoming | planned next |
 | **m6** | editor / 16 gem looks with hold-to-compare | pending | depends on m3, m5 |
 | **m7** | paywall (revenuecat) + profile + privacy controls + account deletion | pending | depends on m6 |
 | **m8** | marketing & download website (`apps/web`) | pending | depends on tokens/content |
@@ -172,12 +172,49 @@
 
 ---
 
-## 6. open issues & next milestone (m4)
+## 6. what is built & verified (m4 deliverables)
 
-- **ready for milestone 4 (m4)**:
-  - Supabase Auth (Apple Sign-in mandatory on iOS + Google Sign-in).
-  - User profiles table and atomic credits ledger (`credits_balance`).
-  - Best Shots Cloud AI Curation Edge Function (in-memory processing with privacy consent).
-  - Merging local guest store favorites/shoots into authenticated Supabase account.
+### 1. supabase client & session cache (`apps/mobile/src/lib/supabase.ts`)
+- initialized Supabase client with custom secure storage adapter and auto session refresh.
+
+### 2. atomic credit store & ledger (`apps/mobile/src/stores/creditStore.ts`)
+- tracks user balance and transaction history with immutable status indicators (`completed`, `refunded`, `failed`).
+- atomic deduction with transaction ID tracking and automatic refund mechanism on processing failure.
+
+### 3. auth store & full screen (`apps/mobile/src/stores/authStore.ts`, `apps/mobile/app/auth.tsx`)
+- email/password sign-in and sign-up with input validation and error feedback.
+- Apple and Google OAuth sign-in buttons styled with warm editorial pills.
+- smooth conversion path for guest users upgrading to full authenticated accounts.
+
+### 4. best shots photo picker screen (`apps/mobile/app/(tabs)/best-shots.tsx`)
+- top header featuring live credit balance pill indicator (`✦ 3 credits`).
+- candidate photo selection grid with checkboxes and gold selection state.
+- selection counter and cost preview banner (`"curate X photos — 1 credit"`).
+- zero-retention privacy guarantee callout card.
+
+### 5. supabase cloud ai edge function (`supabase/functions/curate-best-shots/index.ts`)
+- in-memory stream evaluation over secure TLS without persistent storage.
+- aesthetic scoring for focus, lighting, composition, and expression.
+- atomic credit validation and auto-refund triggers.
+- structured evaluation output with ranked scores and editorial improvement cues.
+
+### 6. client curation service (`apps/mobile/src/services/curationService.ts`)
+- handles pre-curation atomic credit deduction, edge function invocation over TLS, and auto-refund on failure.
+
+### 7. curation results screen (`apps/mobile/app/curation-results.tsx`)
+- top ranked hero photo with gold `"✦ best shot"` badge and score pill (`9.8 / 10`).
+- detailed breakdown cards with `"post"`, `"keep"`, and `"delete"` verdicts (WCAG AA calibrated colors).
+- specific strengths and suggestions for each evaluated photo.
+- `"save curated picks"` and `"try another pose"` navigation actions.
+
+---
+
+## 7. open issues & next milestone (m5)
+
+- **ready for milestone 5 (m5)**:
+  - Best Shots Curation UI enhancements: 3-column swipeable kanban review (*post*, *keep*, *delete*).
+  - Explicit privacy consent modal before upload with biometric/face detection disclosures.
+  - Multi-select batch export and auto-cleanup of unselected burst frames.
+
 
 
