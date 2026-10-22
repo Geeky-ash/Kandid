@@ -8,7 +8,8 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+        "GRADLE_OPTS": "-Dorg.gradle.jvmargs=\"-Xmx3584m -XX:MaxMetaspaceSize=1024m\" -Dorg.gradle.parallel=false -Dorg.gradle.workers.max=2"
       }
     },
     "preview": {
@@ -17,7 +18,8 @@
         "buildType": "apk"
       },
       "env": {
-        "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+        "GRADLE_OPTS": "-Dorg.gradle.jvmargs=\"-Xmx3584m -XX:MaxMetaspaceSize=1024m\" -Dorg.gradle.parallel=false -Dorg.gradle.workers.max=2"
       }
     },
     "production": {
