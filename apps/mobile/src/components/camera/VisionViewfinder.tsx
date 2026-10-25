@@ -57,6 +57,7 @@ const ActiveCameraFeed: React.FC<VisionViewfinderProps> = ({
   const cameraRef = useRef<any>(null);
   const { hasPermission, requestPermission } = useCamPermission();
   const [requested, setRequested] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   const device = useCamDevice(position);
 
   useEffect(() => {
@@ -65,10 +66,6 @@ const ActiveCameraFeed: React.FC<VisionViewfinderProps> = ({
       requestPermission();
     }
   }, [hasPermission, requested, requestPermission]);
-
-  useEffect(() => {
-    if (device && hasPermission) onCameraReady?.();
-  }, [device, hasPermission, onCameraReady]);
 
   if (!hasPermission || !device) {
     return (
@@ -84,13 +81,25 @@ const ActiveCameraFeed: React.FC<VisionViewfinderProps> = ({
     );
   }
 
+  const rawZoom = ZOOM_MULTIPLIERS[zoomLevel] ?? 1.0;
+  const minZoom = device.minZoom ?? 1.0;
+  const maxZoom = device.maxZoom ?? 10.0;
+  const clampedZoom = Math.max(minZoom, Math.min(maxZoom, rawZoom));
+
   return (
     <NativeCamera
       ref={cameraRef}
       style={StyleSheet.absoluteFill}
       device={device}
       isActive={true}
-      zoom={Math.max(1, ZOOM_MULTIPLIERS[zoomLevel])}
+      onInitialized={() => {
+        setIsInitialized(true);
+        onCameraReady?.();
+      }}
+      onError={(err: any) => {
+        console.warn('VisionCamera handled error:', err?.message || err);
+      }}
+      zoom={isInitialized ? clampedZoom : undefined}
     />
   );
 };
