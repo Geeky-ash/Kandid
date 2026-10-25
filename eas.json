@@ -8,7 +8,8 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+        "CMAKE_BUILD_PARALLEL_LEVEL": "1"
       }
     },
     "preview": {
@@ -17,12 +18,14 @@
         "buildType": "apk"
       },
       "env": {
-        "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+        "CMAKE_BUILD_PARALLEL_LEVEL": "1"
       }
     },
     "production": {
       "env": {
-        "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+        "CMAKE_BUILD_PARALLEL_LEVEL": "1"
       }
     }
   }
