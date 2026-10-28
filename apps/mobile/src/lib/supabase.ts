@@ -4,8 +4,7 @@ import { Platform } from 'react-native';
 
 const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL || 'https://kandid-app.supabase.co';
 const SUPABASE_ANON_KEY =
-  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.mock_kandid_anon_token_production';
+  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_JDPdRlKBoSXxqgISpE71BQ__hnwUNmI';
 
 const sessionCache = new Map<string, string>();
 
