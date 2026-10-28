@@ -149,3 +149,25 @@ a feature or milestone is defined as **done** only when:
 12. **legal review sign-off**: formal legal sign-off obtained for biometric privacy laws (bipa/cubi), age policy (13+ / 16+ eu), eula, and privacy policy.
 13. `docs/MEMORY.md` updated with progress, completed items, and next milestone plan.
 14. all architectural changes logged as adrs in `docs/DECISIONS.md`.
+
+---
+
+## 8. final production release verification sign-off (v1.0.0)
+
+**status**: verified & release ready  
+**target platform**: android (api 26+) & ios (16+)  
+**bundle identifier**: `com.kandid.app`  
+
+### verification audit matrix
+| audit gate | command / evidence | status |
+|---|---|---|
+| **typescript compilation** | `npm run typecheck` across all packages | passed (0 errors) |
+| **design token drift** | `node packages/ui-tokens/scripts/check-token-drift.js` | passed (17/17 verified, 0 drift) |
+| **brand & typography rule** | app name `"kandid"` lowercase in `app.json` | verified |
+| **eas production config** | `eas.json` -> `production.android.buildType: "app-bundle"` | verified |
+| **eas preview config** | `eas.json` -> `preview.android.buildType: "apk"` | verified |
+| **c++ build memory limits** | `withCustomGradleProperties.js` (`CMAKE_BUILD_PARALLEL_LEVEL=1`) | verified (adr-019) |
+| **camera lifecycle guard** | `VisionViewfinder.tsx` reactive zoom guarded by `isInitialized` | verified |
+| **privacy & consent flow** | camera & photo library consent screens with zero-retention disclaimers | verified |
+| **best shots privacy model** | client-side ram compression & tls 1.3 ephemeral processing | verified (adr-015, adr-017) |
+| **monorepo cleanliness** | all temporary logs and test artifacts cleaned | verified |

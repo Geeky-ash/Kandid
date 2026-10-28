@@ -6,8 +6,8 @@
 
 ## 1. current status
 
-- **phase**: milestone 4 completed (supabase auth, credit ledger, best shots upload & cloud ai curation edge function).
-- **state**: monorepo workspace with `@kandid/ui-tokens`, `@kandid/content`, and `@kandid/mobile`. all screens and services for m1, m2, m3, and m4 implemented adhering strictly to warm editorial glass tokens (`#fcf9f4`, `#f0ede9`, `#c5a880`, `#5b7e68`, `#1c1a18`), lowercase copy, min 12px text floor, <150 lines per file, zero image retention over TLS, and 0 errors across typescript strict compilation and token drift check.
+- **phase**: release build verification & production standalone packaging verified (v1.0.0).
+- **state**: monorepo workspace with `@kandid/ui-tokens`, `@kandid/content`, and `@kandid/mobile`. all screens and services for m1, m2, m3, m4, and m5 implemented adhering strictly to warm editorial glass tokens (`#fcf9f4`, `#f0ede9`, `#c5a880`, `#5b7e68`, `#1c1a18`), lowercase copy, min 12px text floor, <150 lines per file, zero image retention over TLS, and 0 errors across typescript strict compilation and token drift check.
 - **brand definition**:
   - **app name**: `kandid`
   - **tagline**: `"effortless angles for every shot."`
@@ -15,7 +15,7 @@
   - **bundle identifier / android package**: `com.kandid.app`
   - **design theme**: `"warm editorial glass"` (stitch mcp project id: `931723337622910157`)
 - **active branch**: `main`.
-- **last updated**: 2026-10-22 (milestone 4 completion).
+- **last updated**: 2026-10-28 (final release build verification & production packaging).
 
 ---
 

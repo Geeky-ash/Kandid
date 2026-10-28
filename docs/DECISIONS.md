@@ -26,6 +26,7 @@
 | **adr-016** | parametric skia mannequin rendering (joint coordinates vs static assets) | accepted | 2026-10-18 |
 | **adr-017** | enterprise vision ai privacy (zero data retention, no training, us/eu residency) | accepted | 2026-10-18 |
 | **adr-018** | stitch mcp single source of truth, same-commit sync, and token drift check | accepted | 2026-10-18 |
+| **adr-019** | custom expo config plugin for gradle memory bounds & single-threaded cmake/ninja | accepted | 2026-10-25 |
 
 ---
 
@@ -183,3 +184,10 @@
   - **same-commit synchronization**: any modification or addition to a token in `packages/ui-tokens` strictly requires updating `docs/DESIGN.md` in the exact same git commit.
   - **token drift check**: before any milestone is marked done, an automated or scripted token drift check compares code tokens against stitch mcp, failing if drift is detected.
 - **consequences**: guaranteed design system consistency across the monorepo lifecycle.
+
+---
+
+## adr-019: custom expo config plugin for gradle memory bounds & single-threaded cmake/ninja
+- **context**: `react-native-vision-camera` v5 uses nitro modules with 50+ c++ translation units. on eas cloud build runners (free/medium tier), concurrent ninja compiler jobs caused out-of-memory kills (daemon disappeared).
+- **decision**: implement `withCustomGradleProperties.js` expo config plugin using `withGradleProperties` to enforce `-Xmx1536m -XX:MaxMetaspaceSize=384m` and `withProjectBuildGradle` to set `CMAKE_BUILD_PARALLEL_LEVEL=1`.
+- **consequences**: builds compile deterministically within cloud memory budgets with zero oom crashes.

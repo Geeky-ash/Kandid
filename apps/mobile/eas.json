@@ -23,6 +23,9 @@
       }
     },
     "production": {
+      "android": {
+        "buildType": "app-bundle"
+      },
       "env": {
         "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
         "CMAKE_BUILD_PARALLEL_LEVEL": "1"
