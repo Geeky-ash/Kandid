@@ -28,7 +28,7 @@
 | **m2** | onboarding (paywall step), home, pose library (skeletal seed), pose detail view | **completed** | onboarding flow with tilted cards, home screen with mode cards & tools, 9-category pose library with search & 2-col grid, pose detail with mannequin hero, dual cues, and action bar |
 | **m3** | camera, parametric skia overlay, docked cue cards, timer, soft light, hands-free series | **completed** | vision-camera hardware integration, dynamic lens discovery (0.5x-3x), safe zone cue cards docked at bottom: 120px, single/series hands-free burst modes, soft light 3-temp glow tool |
 | **m4** | supabase auth (apple + google) + backend + best shots ai edge function (in-memory) + atomic credits | **completed** | supabase client & session cache, atomic credit ledger with auto-refunds, auth screen (email/apple/google/guest), best shots photo picker, cloud ai edge function with zero disk retention, curation results view |
-| **m5** | best shots curation ui + consent flows | upcoming | planned next |
+| **m5** | settings & profile, privacy & permission consent flow, credit top-up, haptics & workspace e2e verification | **completed** | profile card with tier badge, credit top-up modal with atomic updates, ledger history modal, capture preferences toggles, 4-pillar zero-storage privacy modal, device permission modal, haptic feedback integration, curation skeleton animation, 0 typecheck errors, 0 token drift |
 | **m6** | editor / 16 gem looks with hold-to-compare | pending | depends on m3, m5 |
 | **m7** | paywall (revenuecat) + profile + privacy controls + account deletion | pending | depends on m6 |
 | **m8** | marketing & download website (`apps/web`) | pending | depends on tokens/content |
@@ -210,12 +210,45 @@
 
 ---
 
-## 7. open issues & next milestone (m5)
+## 7. what is built & verified (m5 deliverables)
 
-- **ready for milestone 5 (m5)**:
-  - Best Shots Curation UI enhancements: 3-column swipeable kanban review (*post*, *keep*, *delete*).
-  - Explicit privacy consent modal before upload with biometric/face detection disclosures.
-  - Multi-select batch export and auto-cleanup of unselected burst frames.
+### 1. profile & account settings screen (`apps/mobile/app/(tabs)/profile.tsx`)
+- assembled modular subcomponents (each strictly < 150 lines).
+- user profile card with avatar initials, email/guest state, and account tier badge (`apps/mobile/src/components/profile/UserProfileCard.tsx`).
+- legal navigation links (privacy policy, terms of service, eula) and version footer ("version 1.0.0 (build 1) · m5 production ready").
+
+### 2. credit balance & atomic top-up system
+- `CreditBalanceSection.tsx`: current credit balance display, "top up credits" CTA, and "view credit history" CTA.
+- `TopUpModal.tsx`: credit purchase tiers (starter 5 credits, editorial creator 20 credits, unlimited pro pass) triggering atomic credit ledger updates in `creditStore.ts`.
+- `TransactionHistoryModal.tsx`: full transactional ledger list showing timestamps, amounts (+ / -), reasons, and status.
+
+### 3. capture preferences & local storage controls
+- `preferencesStore.ts`: reactive Zustand store managing `saveOriginals`, `hapticsEnabled`, and `autoGrid`.
+- `PreferencesSection.tsx`: interactive switches calibrated with warm gold tracks.
+- `PrivacySection.tsx`: triggers for zero-storage architecture modal, permission management modal, and local cache reset with feedback alert.
+
+### 4. privacy & device permission consent flow
+- `PermissionModal.tsx`: graceful contextual prompt for Camera and Media Library access with explicit zero-retention disclaimers.
+- `PrivacyPolicyModal.tsx`: 4-pillar architectural privacy commitment (on-device capture, zero cloud retention, ephemeral in-memory evaluation, strict no-training guarantee).
+
+### 5. ui polish, haptics & skeleton animations
+- `haptics.ts`: wrapper around `expo-haptics` with user preference checks across light, medium, heavy, selection, and success haptic styles.
+- integrated tactile feedback across camera shutter (`ShutterBar.tsx`), tab bar selection (`TabBar.tsx`), pose favorites (`poses.tsx`, `pose/[id].tsx`), and credit purchases.
+- `CurationSkeleton.tsx`: smooth dual shimmer cards rendering during vision ai analysis in `best-shots.tsx`.
+
+### 6. workspace e2e verification
+- `npx tsc --noEmit`: 100% clean (0 TypeScript compilation errors across `@kandid/content`, `@kandid/ui-tokens`, `@kandid/mobile`).
+- `node packages/ui-tokens/scripts/check-token-drift.js`: 17/17 design token and contrast checks passed with 0 unverified drift.
+- all 10 new screens and subcomponents strictly under 150 lines per file.
+
+---
+
+## 8. open issues & next milestone (m6)
+
+- **ready for milestone 6 (m6)**:
+  - Editor & 16 Gem Looks with hold-to-compare (`@shopify/react-native-skia` color matrix filters).
+  - Split-view comparison slider and instant preset switching.
+  - Final high-resolution keeper export to camera roll.
 
 
 

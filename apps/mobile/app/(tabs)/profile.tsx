@@ -1,11 +1,24 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, radius, space, typography } from '@kandid/ui-tokens';
+import { colors, space, typography } from '@kandid/ui-tokens';
 import { copy } from '@kandid/content';
-import { PillButton } from '../../src/components/common/PillButton';
+import { UserProfileCard } from '../../src/components/profile/UserProfileCard';
+import { CreditBalanceSection } from '../../src/components/profile/CreditBalanceSection';
+import { PreferencesSection } from '../../src/components/profile/PreferencesSection';
+import { PrivacySection } from '../../src/components/profile/PrivacySection';
+import { TopUpModal } from '../../src/components/profile/TopUpModal';
+import { TransactionHistoryModal } from '../../src/components/profile/TransactionHistoryModal';
+import { PrivacyPolicyModal } from '../../src/components/profile/PrivacyPolicyModal';
+import { PermissionModal } from '../../src/components/common/PermissionModal';
+import { triggerHaptic } from '../../src/utils/haptics';
 
 export default function ProfileScreen() {
+  const [topUpVisible, setTopUpVisible] = useState(false);
+  const [historyVisible, setHistoryVisible] = useState(false);
+  const [privacyVisible, setPrivacyVisible] = useState(false);
+  const [permissionsVisible, setPermissionsVisible] = useState(false);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -13,185 +26,98 @@ export default function ProfileScreen() {
           <Text style={styles.title}>{copy.profile.title}</Text>
         </View>
 
-        {/* guest status card */}
-        <View style={styles.guestCard}>
-          <Text style={styles.guestTitle}>guest account</Text>
-          <Text style={styles.guestDesc}>{copy.profile.guestNotice}</Text>
-          <View style={styles.signInGroup}>
-            <PillButton
-              label={copy.profile.signInWithApple}
-              variant="secondary"
-              onPress={() => {}}
-              style={styles.signInButton}
-            />
-            <PillButton
-              label={copy.profile.signInWithGoogle}
-              variant="secondary"
-              onPress={() => {}}
-              style={styles.signInButton}
-            />
-          </View>
-        </View>
+        <UserProfileCard />
 
-        {/* stats row */}
-        <View style={styles.statsRow}>
-          <View style={styles.statCard}>
-            <Text style={styles.statNumber}>0</Text>
-            <Text style={styles.statLabel}>{copy.profile.shootsCompleted}</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statNumber}>3</Text>
-            <Text style={styles.statLabel}>{copy.profile.savedPoses}</Text>
-          </View>
-        </View>
+        <CreditBalanceSection
+          onOpenTopUp={() => setTopUpVisible(true)}
+          onOpenHistory={() => setHistoryVisible(true)}
+        />
 
-        {/* privacy & data governance */}
-        <View style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>{copy.profile.privacySection}</Text>
-          <Text style={styles.sectionBody}>{copy.profile.zeroRetentionDesc}</Text>
-        </View>
+        <PreferencesSection />
 
-        {/* legal links */}
+        <PrivacySection
+          onOpenPrivacyModal={() => setPrivacyVisible(true)}
+          onOpenPermissionsModal={() => setPermissionsVisible(true)}
+        />
+
+        {/* legal & version footer */}
         <View style={styles.legalSection}>
-          <TouchableOpacity style={styles.legalRow}>
-            <Text style={styles.legalText}>{copy.profile.legal.termsOfService}</Text>
-            <Text style={styles.legalArrow}>›</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.legalRow}>
+          <TouchableOpacity
+            style={styles.legalRow}
+            onPress={() => { triggerHaptic.light(); setPrivacyVisible(true); }}
+          >
             <Text style={styles.legalText}>{copy.profile.legal.privacyPolicy}</Text>
             <Text style={styles.legalArrow}>›</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.legalRow}>
+          <TouchableOpacity
+            style={styles.legalRow}
+            onPress={() => { triggerHaptic.light(); Linking.openURL('https://kandid.app/terms').catch(() => {}); }}
+          >
+            <Text style={styles.legalText}>{copy.profile.legal.termsOfService}</Text>
+            <Text style={styles.legalArrow}>›</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.legalRow}
+            onPress={() => { triggerHaptic.light(); Linking.openURL('https://kandid.app/eula').catch(() => {}); }}
+          >
             <Text style={styles.legalText}>{copy.profile.legal.eula}</Text>
             <Text style={styles.legalArrow}>›</Text>
           </TouchableOpacity>
           <Text style={styles.copyrightText}>{copy.profile.legal.copyright}</Text>
+          <Text style={styles.versionText}>version 1.0.0 (build 1) · m5 production ready</Text>
         </View>
 
         <View style={styles.bottomSpacer} />
       </ScrollView>
+
+      <TopUpModal visible={topUpVisible} onClose={() => setTopUpVisible(false)} />
+      <TransactionHistoryModal visible={historyVisible} onClose={() => setHistoryVisible(false)} />
+      <PrivacyPolicyModal visible={privacyVisible} onClose={() => setPrivacyVisible(false)} />
+      <PermissionModal
+        visible={permissionsVisible}
+        onClose={() => setPermissionsVisible(false)}
+        onRequestPermissions={() => {}}
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: colors.background.primary,
-  },
-  scrollContent: {
-    paddingHorizontal: space.marginMobile,
-    paddingTop: space.sm,
-  },
-  header: {
-    marginBottom: space.md,
-  },
+  safeArea: { flex: 1, backgroundColor: colors.background.primary },
+  scrollContent: { paddingHorizontal: space.marginMobile, paddingTop: space.sm },
+  header: { marginBottom: space.md },
   title: {
     fontFamily: typography.fontFamilies.headline,
     fontSize: typography.fontSize.headlineLg,
     color: colors.text.primary,
   },
-  guestCard: {
-    backgroundColor: colors.background.surface,
-    borderRadius: radius['2xl'],
-    padding: space.lg,
-    borderWidth: 1,
-    borderColor: colors.border.subtle,
-    marginBottom: space.lg,
-  },
-  guestTitle: {
-    fontFamily: typography.fontFamilies.headline,
-    fontSize: typography.fontSize.headlineSm,
-    color: colors.text.primary,
-    marginBottom: 4,
-  },
-  guestDesc: {
-    fontFamily: typography.fontFamilies.body,
-    fontSize: typography.fontSize.bodySm,
-    color: colors.text.secondary,
-    lineHeight: 18,
-    marginBottom: space.md,
-  },
-  signInGroup: {
-    gap: space.sm,
-  },
-  signInButton: {
-    width: '100%',
-  },
-  statsRow: {
-    flexDirection: 'row',
-    gap: space.md,
-    marginBottom: space.lg,
-  },
-  statCard: {
-    flex: 1,
-    backgroundColor: colors.background.surface,
-    borderRadius: radius.xl,
-    padding: space.md,
-    borderWidth: 1,
-    borderColor: colors.border.subtle,
-    alignItems: 'center',
-  },
-  statNumber: {
-    fontFamily: typography.fontFamilies.headline,
-    fontSize: typography.fontSize.headlineMd,
-    color: colors.text.primary,
-  },
-  statLabel: {
-    fontFamily: typography.fontFamilies.body,
-    fontSize: 12,
-    color: colors.text.secondary,
-    marginTop: 2,
-  },
-  sectionCard: {
-    backgroundColor: colors.background.surface,
-    borderRadius: radius.xl,
-    padding: space.md,
-    borderWidth: 1,
-    borderColor: colors.border.subtle,
-    marginBottom: space.lg,
-  },
-  sectionTitle: {
-    fontFamily: typography.fontFamilies.headline,
-    fontSize: typography.fontSize.bodyMd,
-    fontWeight: typography.fontWeight.semibold,
-    color: colors.text.primary,
-    marginBottom: 4,
-  },
-  sectionBody: {
-    fontFamily: typography.fontFamilies.body,
-    fontSize: 12,
-    color: colors.text.secondary,
-    lineHeight: 16,
-  },
-  legalSection: {
-    paddingVertical: space.sm,
-  },
+  legalSection: { paddingVertical: space.md, alignItems: 'center' },
   legalRow: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
     paddingVertical: space.sm,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.subtle,
+    borderColor: colors.border.subtle,
   },
   legalText: {
     fontFamily: typography.fontFamilies.body,
     fontSize: typography.fontSize.bodySm,
-    color: colors.text.primary,
+    color: colors.text.secondary,
   },
-  legalArrow: {
-    fontSize: 18,
-    color: colors.text.tertiary,
-  },
+  legalArrow: { fontSize: 18, color: colors.text.secondary },
   copyrightText: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 11,
-    color: colors.text.tertiary,
-    marginTop: space.md,
-    textAlign: 'center',
+    fontSize: 12,
+    color: colors.text.secondary,
+    marginTop: space.lg,
   },
-  bottomSpacer: {
-    height: 100,
+  versionText: {
+    fontFamily: typography.fontFamilies.body,
+    fontSize: 12,
+    color: colors.brand.gold,
+    marginTop: 4,
+    fontWeight: typography.fontWeight.semibold,
   },
+  bottomSpacer: { height: 110 },
 });

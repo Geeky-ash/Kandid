@@ -8,6 +8,9 @@ import { useCreditStore } from '../../src/stores/creditStore';
 import { useAuthStore } from '../../src/stores/authStore';
 import { requestBestShotsCuration } from '../../src/services/curationService';
 
+import { CurationSkeleton } from '../../src/components/common/CurationSkeleton';
+import { triggerHaptic } from '../../src/utils/haptics';
+
 // seed candidate photos for curation testing
 const CANDIDATE_PHOTOS = [
   { id: 'p1', label: 'shot 01', tint: '#2C2825' },
@@ -26,6 +29,7 @@ export default function BestShotsScreen() {
   const [isCurating, setIsCurating] = useState(false);
 
   const toggleSelect = (id: string) => {
+    triggerHaptic.selection();
     setSelectedIds(prev =>
       prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
@@ -33,11 +37,13 @@ export default function BestShotsScreen() {
 
   const handleCurate = async () => {
     if (selectedIds.length < 2) return;
+    triggerHaptic.heavy();
     setIsCurating(true);
     const result = await requestBestShotsCuration(user?.id || 'guest', selectedIds);
     setIsCurating(false);
 
     if (result.status === 'success') {
+      triggerHaptic.success();
       router.push({
         pathname: '/curation-results' as any,
         params: { data: JSON.stringify(result) },
@@ -76,25 +82,33 @@ export default function BestShotsScreen() {
           <Text style={styles.costBadge}>1 credit per burst</Text>
         </View>
 
-        {/* photo selection grid */}
-        <View style={styles.photoGrid}>
-          {CANDIDATE_PHOTOS.map(photo => {
-            const isSelected = selectedIds.includes(photo.id);
-            return (
-              <TouchableOpacity
-                key={photo.id}
-                onPress={() => toggleSelect(photo.id)}
-                activeOpacity={0.8}
-                style={[styles.photoCard, { backgroundColor: photo.tint }, isSelected && styles.photoCardSelected]}
-              >
-                <View style={[styles.checkbox, isSelected && styles.checkboxSelected]}>
-                  {isSelected && <Text style={styles.checkmark}>✓</Text>}
-                </View>
-                <Text style={styles.photoLabel}>{photo.label}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        {/* photo selection grid or skeleton */}
+        {isCurating ? (
+          <View style={styles.skeletonContainer}>
+            <Text style={styles.skeletonStatusText}>evaluating poses & lighting in-memory...</Text>
+            <CurationSkeleton />
+            <CurationSkeleton />
+          </View>
+        ) : (
+          <View style={styles.photoGrid}>
+            {CANDIDATE_PHOTOS.map(photo => {
+              const isSelected = selectedIds.includes(photo.id);
+              return (
+                <TouchableOpacity
+                  key={photo.id}
+                  onPress={() => toggleSelect(photo.id)}
+                  activeOpacity={0.8}
+                  style={[styles.photoCard, { backgroundColor: photo.tint }, isSelected && styles.photoCardSelected]}
+                >
+                  <View style={[styles.checkbox, isSelected && styles.checkboxSelected]}>
+                    {isSelected && <Text style={styles.checkmark}>✓</Text>}
+                  </View>
+                  <Text style={styles.photoLabel}>{photo.label}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        )}
 
         {/* curate primary action */}
         <TouchableOpacity
@@ -136,6 +150,14 @@ const styles = StyleSheet.create({
   checkboxSelected: { backgroundColor: colors.brand.gold, borderColor: colors.brand.gold },
   checkmark: { color: colors.text.onGold, fontSize: 12, fontWeight: typography.fontWeight.bold },
   photoLabel: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelSm, color: colors.text.inverse },
+  skeletonContainer: { marginBottom: space.lg },
+  skeletonStatusText: {
+    fontFamily: typography.fontFamilies.headline,
+    fontSize: typography.fontSize.bodySm,
+    color: colors.brand.goldDark,
+    textAlign: 'center',
+    marginBottom: space.sm,
+  },
   curateButton: { height: 50, borderRadius: radius.pill, backgroundColor: colors.brand.gold, alignItems: 'center', justifyContent: 'center', shadowColor: colors.brand.goldDark, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 10, elevation: 4 },
   curateButtonDisabled: { opacity: 0.45 },
   curateButtonText: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelMd, color: colors.text.onGold, fontWeight: typography.fontWeight.bold },

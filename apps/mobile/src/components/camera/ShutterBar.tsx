@@ -20,6 +20,8 @@ interface ShutterBarProps {
   capturedCount: number;
 }
 
+import { triggerHaptic } from '../../utils/haptics';
+
 export const ShutterBar: React.FC<ShutterBarProps> = ({
   zoomLevel,
   onSelectZoom,
@@ -32,14 +34,40 @@ export const ShutterBar: React.FC<ShutterBarProps> = ({
   onFlipCamera,
   capturedCount,
 }) => {
+  const handleShutterPress = () => {
+    triggerHaptic.heavy();
+    onPressShutter();
+  };
+
+  const handleModeToggle = (m: ShutterMode) => {
+    triggerHaptic.selection();
+    onToggleShutterMode(m);
+  };
+
+  const handleBurstInterval = (sec: number) => {
+    triggerHaptic.selection();
+    onSelectBurstInterval(sec);
+  };
+
+  const handleFlip = () => {
+    triggerHaptic.medium();
+    onFlipCamera();
+  };
+
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <View style={styles.topSelectorRow}>
-        <ZoomPillSelector zoomLevel={zoomLevel} onSelectZoom={onSelectZoom} />
+        <ZoomPillSelector
+          zoomLevel={zoomLevel}
+          onSelectZoom={z => {
+            triggerHaptic.selection();
+            onSelectZoom(z);
+          }}
+        />
 
         <View style={styles.modeTogglePill}>
           <TouchableOpacity
-            onPress={() => onToggleShutterMode('single')}
+            onPress={() => handleModeToggle('single')}
             style={[styles.modeTab, shutterMode === 'single' && styles.modeTabActive]}
           >
             <Text style={[styles.modeTabText, shutterMode === 'single' && styles.modeTabTextActive]}>
@@ -47,7 +75,7 @@ export const ShutterBar: React.FC<ShutterBarProps> = ({
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onToggleShutterMode('series')}
+            onPress={() => handleModeToggle('series')}
             style={[styles.modeTab, shutterMode === 'series' && styles.modeTabActive]}
           >
             <Text style={[styles.modeTabText, shutterMode === 'series' && styles.modeTabTextActive]}>
@@ -63,7 +91,7 @@ export const ShutterBar: React.FC<ShutterBarProps> = ({
           {BURST_INTERVALS.map(sec => (
             <TouchableOpacity
               key={sec}
-              onPress={() => onSelectBurstInterval(sec)}
+              onPress={() => handleBurstInterval(sec)}
               style={[styles.intervalPill, burstInterval === sec && styles.intervalPillActive]}
             >
               <Text style={[styles.intervalPillText, burstInterval === sec && styles.intervalPillTextActive]}>
@@ -88,12 +116,12 @@ export const ShutterBar: React.FC<ShutterBarProps> = ({
           accessibilityLabel="take photo or start series"
           style={[styles.shutterOuterRing, isCapturing && styles.shutterOuterRingActive]}
           activeOpacity={0.8}
-          onPress={onPressShutter}
+          onPress={handleShutterPress}
         >
           <View style={[styles.shutterInnerCircle, isCapturing && styles.shutterInnerCircleActive]} />
         </TouchableOpacity>
 
-        <TouchableOpacity accessibilityLabel="flip camera" style={styles.circleButton} onPress={onFlipCamera}>
+        <TouchableOpacity accessibilityLabel="flip camera" style={styles.circleButton} onPress={handleFlip}>
           <Text style={styles.flipIcon}>🔄</Text>
         </TouchableOpacity>
       </View>

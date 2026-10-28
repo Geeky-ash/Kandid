@@ -33,6 +33,8 @@ const TABS_RIGHT: TabItem[] = [
   { name: 'profile', label: 'profile', iconText: '👤' },
 ];
 
+import { triggerHaptic } from '../../utils/haptics';
+
 export const TabBar: React.FC<TabBarProps> = ({
   state,
   navigation,
@@ -42,6 +44,7 @@ export const TabBar: React.FC<TabBarProps> = ({
   const currentRouteName = state.routes[state.index]?.name;
 
   const navigateToTab = (routeName: string) => {
+    triggerHaptic.selection();
     const isFocused = currentRouteName === routeName;
     if (navigation?.emit) {
       const event = navigation.emit({
@@ -61,6 +64,7 @@ export const TabBar: React.FC<TabBarProps> = ({
   };
 
   const openCamera = () => {
+    triggerHaptic.medium();
     router.push('/camera' as any);
   };
 

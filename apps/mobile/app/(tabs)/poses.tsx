@@ -7,6 +7,8 @@ import { copy, seedPoses, PoseCategory } from '@kandid/content';
 import { useGuestStore } from '../../src/stores/guestStore';
 import { MannequinView } from '../../src/components/camera/MannequinView';
 
+import { triggerHaptic } from '../../src/utils/haptics';
+
 export default function PosesScreen() {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -24,6 +26,21 @@ export default function PosesScreen() {
   const getCategoryCount = (categoryId: string) => {
     if (categoryId === 'all') return seedPoses.length;
     return seedPoses.filter(p => p.category === categoryId).length;
+  };
+
+  const handleCategoryPress = (catId: string) => {
+    triggerHaptic.selection();
+    setSelectedCategory(catId as PoseCategory);
+  };
+
+  const handleSavePress = (poseId: string) => {
+    triggerHaptic.selection();
+    toggleSavePose(poseId);
+  };
+
+  const handlePosePress = (poseId: string) => {
+    triggerHaptic.light();
+    router.push(`/pose/${poseId}` as any);
   };
 
   return (
@@ -60,7 +77,7 @@ export default function PosesScreen() {
             return (
               <TouchableOpacity
                 key={cat.id}
-                onPress={() => setSelectedCategory(cat.id as PoseCategory)}
+                onPress={() => handleCategoryPress(cat.id)}
                 style={[styles.filterChip, isSelected && styles.filterChipActive]}
                 activeOpacity={0.75}
               >
@@ -86,7 +103,7 @@ export default function PosesScreen() {
                 <TouchableOpacity
                   key={pose.id}
                   style={styles.poseCard}
-                  onPress={() => router.push(`/pose/${pose.id}` as any)}
+                  onPress={() => handlePosePress(pose.id)}
                   activeOpacity={0.85}
                 >
                   {/* mannequin preview container */}
@@ -104,7 +121,7 @@ export default function PosesScreen() {
                     <TouchableOpacity
                       accessibilityLabel="save pose"
                       style={styles.heartButton}
-                      onPress={() => toggleSavePose(pose.id)}
+                      onPress={() => handleSavePress(pose.id)}
                       activeOpacity={0.7}
                     >
                       <Text style={[styles.heartIcon, saved && styles.heartIconActive]}>

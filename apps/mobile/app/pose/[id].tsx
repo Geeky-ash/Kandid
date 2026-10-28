@@ -9,6 +9,8 @@ import { PoseHero } from '../../src/components/pose/PoseHero';
 import { PoseCuesSection } from '../../src/components/pose/PoseCuesSection';
 import { PoseActionBar } from '../../src/components/pose/PoseActionBar';
 
+import { triggerHaptic } from '../../src/utils/haptics';
+
 export default function PoseDetailScreen() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -29,10 +31,16 @@ export default function PoseDetailScreen() {
   }
 
   const handleUsePose = () => {
+    triggerHaptic.medium();
     router.push({
       pathname: '/camera',
       params: { poseId: pose.id },
     });
+  };
+
+  const handleToggleSave = () => {
+    triggerHaptic.selection();
+    toggleSavePose(pose.id);
   };
 
   return (
@@ -53,7 +61,7 @@ export default function PoseDetailScreen() {
 
         <TouchableOpacity
           accessibilityLabel="save pose"
-          onPress={() => toggleSavePose(pose.id)}
+          onPress={handleToggleSave}
           style={styles.circleButton}
         >
           <Text style={[styles.circleIcon, isSaved && styles.heartActive]}>
