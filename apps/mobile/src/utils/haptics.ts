@@ -34,4 +34,10 @@ export const triggerHaptic = {
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     } catch {}
   },
+  error: async () => {
+    if (!isHapticsAllowed()) return;
+    try {
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    } catch {}
+  },
 };

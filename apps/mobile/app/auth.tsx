@@ -4,47 +4,32 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius, space, typography } from '@kandid/ui-tokens';
 import { useAuthStore } from '../src/stores/authStore';
+import { triggerHaptic } from '../src/utils/haptics';
 
 export default function AuthScreen() {
   const router = useRouter();
-  const { signInWithEmail, signUpWithEmail, signInWithOAuth, continueAsGuest, isLoading, error } =
-    useAuthStore();
-
+  const { signInWithEmail, signUpWithEmail, signInWithOAuth, continueAsGuest, isLoading, error } = useAuthStore();
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async () => {
     if (!email || !password) return;
-    const res =
-      mode === 'signin'
-        ? await signInWithEmail(email, password)
-        : await signUpWithEmail(email, password);
-    if (res.success) {
-      router.back();
-    }
+    triggerHaptic.light();
+    const res = mode === 'signin' ? await signInWithEmail(email, password) : await signUpWithEmail(email, password);
+    if (res.success) router.back();
   };
 
   const handleOAuth = async (provider: 'apple' | 'google') => {
+    triggerHaptic.selection();
     const res = await signInWithOAuth(provider);
-    if (res.success) {
-      router.back();
-    }
-  };
-
-  const handleGuest = () => {
-    continueAsGuest();
-    router.back();
+    if (res.success) router.back();
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={styles.keyboardContainer}
-      >
-        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          {/* header */}
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.flex}>
+        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <Text style={styles.brandTitle}>kandid</Text>
             <Text style={styles.subtitle}>
@@ -52,27 +37,36 @@ export default function AuthScreen() {
             </Text>
           </View>
 
+          {/* primary google oauth button */}
+          <TouchableOpacity
+            style={styles.googleButton}
+            onPress={() => handleOAuth('google')}
+            disabled={isLoading}
+          >
+            <View style={styles.googleIconBox}><Text style={styles.googleG}>G</Text></View>
+            <Text style={styles.googleButtonText}>continue with google</Text>
+          </TouchableOpacity>
+
+          <View style={styles.dividerRow}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>or continue with email</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
           {/* segmented toggle */}
           <View style={styles.segmentedRow}>
-            <TouchableOpacity
-              onPress={() => setMode('signin')}
-              style={[styles.segmentTab, mode === 'signin' && styles.segmentTabActive]}
-            >
+            <TouchableOpacity onPress={() => setMode('signin')} style={[styles.segmentTab, mode === 'signin' && styles.segmentActive]}>
               <Text style={[styles.segmentText, mode === 'signin' && styles.segmentTextActive]}>sign in</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setMode('signup')}
-              style={[styles.segmentTab, mode === 'signup' && styles.segmentTabActive]}
-            >
+            <TouchableOpacity onPress={() => setMode('signup')} style={[styles.segmentTab, mode === 'signup' && styles.segmentActive]}>
               <Text style={[styles.segmentText, mode === 'signup' && styles.segmentTextActive]}>create account</Text>
             </TouchableOpacity>
           </View>
 
           {error && <Text style={styles.errorText}>{error}</Text>}
 
-          {/* form inputs */}
+          {/* inputs */}
           <View style={styles.formContainer}>
-            <Text style={styles.inputLabel}>email address</Text>
             <TextInput
               style={styles.input}
               placeholder="you@kandid.app"
@@ -82,50 +76,30 @@ export default function AuthScreen() {
               value={email}
               onChangeText={setEmail}
             />
-
-            <Text style={styles.inputLabel}>password</Text>
             <TextInput
               style={styles.input}
-              placeholder="••••••••"
+              placeholder="password"
               placeholderTextColor={colors.text.tertiary}
               secureTextEntry
               value={password}
               onChangeText={setPassword}
             />
-
             <TouchableOpacity
-              accessibilityRole="button"
               onPress={handleSubmit}
-              disabled={isLoading}
-              style={[styles.submitButton, (!email || !password || isLoading) && styles.submitButtonDisabled]}
+              disabled={isLoading || !email || !password}
+              style={[styles.submitButton, (!email || !password || isLoading) && styles.disabled]}
             >
-              <Text style={styles.submitButtonText}>
-                {isLoading ? 'processing...' : mode === 'signin' ? 'sign in' : 'create account'}
-              </Text>
+              <Text style={styles.submitText}>{isLoading ? 'processing...' : mode === 'signin' ? 'sign in' : 'create account'}</Text>
             </TouchableOpacity>
           </View>
 
-          {/* oauth section */}
-          <View style={styles.dividerRow}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>or continue with</Text>
-            <View style={styles.dividerLine} />
-          </View>
+          {/* secondary actions */}
+          <TouchableOpacity style={styles.appleButton} onPress={() => handleOAuth('apple')}>
+            <Text style={styles.appleText}> continue with apple</Text>
+          </TouchableOpacity>
 
-          <View style={styles.oauthRow}>
-            <TouchableOpacity style={styles.oauthButton} onPress={() => handleOAuth('apple')}>
-              <Text style={styles.oauthIcon}></Text>
-              <Text style={styles.oauthLabel}>apple</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.oauthButton} onPress={() => handleOAuth('google')}>
-              <Text style={styles.oauthIcon}>G</Text>
-              <Text style={styles.oauthLabel}>google</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* guest mode bypass */}
-          <TouchableOpacity onPress={handleGuest} style={styles.guestLinkButton}>
-            <Text style={styles.guestLinkText}>continue as guest (offline mode)</Text>
+          <TouchableOpacity onPress={() => { continueAsGuest(); router.back(); }} style={styles.guestButton}>
+            <Text style={styles.guestText}>continue as guest (offline mode)</Text>
           </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -135,30 +109,31 @@ export default function AuthScreen() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: colors.background.primary },
-  keyboardContainer: { flex: 1 },
-  scrollContent: { paddingHorizontal: space.marginMobile, paddingVertical: space.lg },
-  header: { alignItems: 'center', marginBottom: space.lg },
-  brandTitle: { fontFamily: typography.fontFamilies.headline, fontSize: typography.fontSize.displayLg, color: colors.text.primary, marginBottom: space.xs },
+  flex: { flex: 1 },
+  scroll: { paddingHorizontal: space.marginMobile, paddingVertical: space.md },
+  header: { alignItems: 'center', marginBottom: space.md },
+  brandTitle: { fontFamily: typography.fontFamilies.headline, fontSize: typography.fontSize.displayLg, color: colors.text.primary },
   subtitle: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.bodySm, color: colors.text.secondary, textAlign: 'center' },
-  segmentedRow: { flexDirection: 'row', backgroundColor: colors.background.secondary, borderRadius: radius.pill, padding: 4, marginBottom: space.lg },
-  segmentTab: { flex: 1, paddingVertical: 10, alignItems: 'center', borderRadius: radius.pill },
-  segmentTabActive: { backgroundColor: colors.brand.espresso },
-  segmentText: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelSm, color: colors.text.secondary, fontWeight: typography.fontWeight.medium },
-  segmentTextActive: { color: colors.background.primary, fontWeight: typography.fontWeight.bold },
-  formContainer: { backgroundColor: colors.background.surface, padding: space.md, borderRadius: radius['2xl'], borderWidth: 1, borderColor: colors.border.subtle, marginBottom: space.lg },
-  inputLabel: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelSm, color: colors.text.secondary, marginBottom: space.xs },
-  input: { height: 48, backgroundColor: colors.background.secondary, borderRadius: radius.lg, paddingHorizontal: space.md, fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.bodyMd, color: colors.text.primary, marginBottom: space.md },
-  submitButton: { height: 48, borderRadius: radius.pill, backgroundColor: colors.brand.gold, alignItems: 'center', justifyContent: 'center', marginTop: space.xs },
-  submitButtonDisabled: { opacity: 0.5 },
-  submitButtonText: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelMd, color: colors.text.onGold, fontWeight: typography.fontWeight.bold },
-  errorText: { color: colors.status.error, fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.bodySm, textAlign: 'center', marginBottom: space.sm },
-  dividerRow: { flexDirection: 'row', alignItems: 'center', marginBottom: space.md, gap: space.sm },
+  googleButton: { height: 50, borderRadius: radius.pill, backgroundColor: colors.background.surface, borderWidth: 1.5, borderColor: colors.brand.gold, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.sm, marginBottom: space.md },
+  googleIconBox: { width: 22, height: 22, borderRadius: 11, backgroundColor: colors.brand.espresso, alignItems: 'center', justifyContent: 'center' },
+  googleG: { color: colors.brand.gold, fontSize: 13, fontWeight: 'bold' },
+  googleButtonText: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelMd, color: colors.text.primary, fontWeight: typography.fontWeight.semibold },
+  dividerRow: { flexDirection: 'row', alignItems: 'center', marginVertical: space.sm, gap: space.sm },
   dividerLine: { flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: colors.border.subtle },
-  dividerText: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelSm, color: colors.text.tertiary },
-  oauthRow: { flexDirection: 'row', gap: space.md, marginBottom: space.lg },
-  oauthButton: { flex: 1, height: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.xs, borderRadius: radius.pill, backgroundColor: colors.background.surface, borderWidth: 1, borderColor: colors.border.subtle },
-  oauthIcon: { fontSize: 18, color: colors.text.primary },
-  oauthLabel: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelSm, color: colors.text.primary, fontWeight: typography.fontWeight.semibold },
-  guestLinkButton: { alignItems: 'center', paddingVertical: space.sm },
-  guestLinkText: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.bodySm, color: colors.text.secondary, textDecorationLine: 'underline' },
+  dividerText: { fontFamily: typography.fontFamilies.body, fontSize: 12, color: colors.text.tertiary },
+  segmentedRow: { flexDirection: 'row', backgroundColor: colors.background.secondary, borderRadius: radius.pill, padding: 3, marginBottom: space.md },
+  segmentTab: { flex: 1, paddingVertical: 8, alignItems: 'center', borderRadius: radius.pill },
+  segmentActive: { backgroundColor: colors.brand.espresso },
+  segmentText: { fontFamily: typography.fontFamilies.body, fontSize: 13, color: colors.text.secondary },
+  segmentTextActive: { color: colors.background.primary, fontWeight: typography.fontWeight.bold },
+  formContainer: { backgroundColor: colors.background.surface, padding: space.md, borderRadius: radius['2xl'], borderWidth: 1, borderColor: colors.border.subtle, marginBottom: space.md },
+  input: { height: 46, backgroundColor: colors.background.secondary, borderRadius: radius.lg, paddingHorizontal: space.md, fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.bodyMd, color: colors.text.primary, marginBottom: space.sm },
+  submitButton: { height: 46, borderRadius: radius.pill, backgroundColor: colors.brand.gold, alignItems: 'center', justifyContent: 'center', marginTop: 4 },
+  submitText: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelMd, color: colors.text.onGold, fontWeight: typography.fontWeight.bold },
+  disabled: { opacity: 0.5 },
+  errorText: { color: colors.status.error, fontFamily: typography.fontFamilies.body, fontSize: 12, textAlign: 'center', marginBottom: space.xs },
+  appleButton: { height: 44, borderRadius: radius.pill, backgroundColor: colors.background.secondary, alignItems: 'center', justifyContent: 'center', marginBottom: space.sm },
+  appleText: { fontFamily: typography.fontFamilies.body, fontSize: 13, color: colors.text.primary, fontWeight: typography.fontWeight.medium },
+  guestButton: { alignItems: 'center', paddingVertical: space.sm },
+  guestText: { fontFamily: typography.fontFamilies.body, fontSize: 12, color: colors.text.secondary, textDecorationLine: 'underline' },
 });
