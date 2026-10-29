@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, radius, space, typography } from '@kandid/ui-tokens';
 import { ShutterMode, ZoomLevel } from '../../stores/cameraStore';
 import { ZoomPillSelector } from './ZoomPillSelector';
@@ -33,7 +32,7 @@ export const ShutterBar: React.FC<ShutterBarProps> = ({
   capturedCount,
 }) => {
   return (
-    <SafeAreaView edges={['bottom']} style={styles.container}>
+    <View pointerEvents="auto" style={styles.container}>
       <View style={styles.topSelectorRow}>
         <ZoomPillSelector
           zoomLevel={zoomLevel}
@@ -87,7 +86,7 @@ export const ShutterBar: React.FC<ShutterBarProps> = ({
           <Text style={styles.flipIcon}>🔄</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

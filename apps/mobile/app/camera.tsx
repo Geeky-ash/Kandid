@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { seedPoses, getPoseById } from '@kandid/content';
 import { useCameraStore } from '../src/stores/cameraStore';
 import { VisionViewfinder } from '../src/components/camera/VisionViewfinder';
@@ -11,6 +12,7 @@ import { ShutterBar } from '../src/components/camera/ShutterBar';
 import { SoftLightModal } from '../src/components/camera/SoftLightModal';
 
 export default function CameraScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const { poseId } = useLocalSearchParams<{ poseId?: string }>();
   const [cueIndex, setCueIndex] = useState(0);
@@ -75,20 +77,20 @@ export default function CameraScreen() {
 
   return (
     <View style={styles.container}>
-      {/* 1. camera feed */}
+      {/* layer 1: full-screen camera feed */}
       <VisionViewfinder
         position={store.cameraPosition}
         zoomLevel={store.zoomLevel}
       />
 
-      {/* 2. skia mannequin, grid lines & countdown overlay */}
+      {/* layer 2: skia mannequin, grid lines & countdown overlay */}
       <CameraOverlay
         joints={activePose.skeletonJoints}
         showGrid={store.showGrid}
         countdown={store.countdown}
       />
 
-      {/* 3. top control bar */}
+      {/* layer 3: top control bar — absolute top with safe area */}
       <CameraTopBar
         onClose={() => router.back()}
         flash={store.flash}
@@ -102,7 +104,7 @@ export default function CameraScreen() {
         onToggleCueType={() => setCueType(prev => (prev === 'subject' ? 'photographer' : 'subject'))}
       />
 
-      {/* 4. docked cue card in safe zone (bottom: 120px) */}
+      {/* layer 4: cue card docked in safe zone at bottom: 120 (above shutter) */}
       <CueCard
         cueText={currentCue}
         cueType={cueType}
@@ -113,21 +115,26 @@ export default function CameraScreen() {
         onToggleType={() => setCueType(prev => (prev === 'subject' ? 'photographer' : 'subject'))}
       />
 
-      {/* 5. bottom shutter controls & zoom selector */}
-      <ShutterBar
-        zoomLevel={store.zoomLevel}
-        onSelectZoom={store.setZoomLevel}
-        shutterMode={store.shutterMode}
-        onToggleShutterMode={store.setShutterMode}
-        burstInterval={store.burstInterval}
-        onSelectBurstInterval={store.setBurstInterval}
-        isCapturing={store.isCapturing}
-        onPressShutter={executeShutter}
-        onFlipCamera={store.toggleCameraPosition}
-        capturedCount={store.capturedPhotos.length}
-      />
+      {/* layer 5: shutter bar — strictly pinned to viewport bottom */}
+      <View
+        pointerEvents="box-none"
+        style={[styles.shutterBarAnchor, { bottom: insets.bottom + 16 }]}
+      >
+        <ShutterBar
+          zoomLevel={store.zoomLevel}
+          onSelectZoom={store.setZoomLevel}
+          shutterMode={store.shutterMode}
+          onToggleShutterMode={store.setShutterMode}
+          burstInterval={store.burstInterval}
+          onSelectBurstInterval={store.setBurstInterval}
+          isCapturing={store.isCapturing}
+          onPressShutter={executeShutter}
+          onFlipCamera={store.toggleCameraPosition}
+          capturedCount={store.capturedPhotos.length}
+        />
+      </View>
 
-      {/* 6. soft light illumination modal */}
+      {/* layer 6: soft light illumination modal */}
       <SoftLightModal
         visible={store.showSoftLight}
         onClose={() => store.setShowSoftLight(false)}
@@ -144,5 +151,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0E0D0C',
+  },
+  shutterBarAnchor: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    zIndex: 50,
   },
 });
