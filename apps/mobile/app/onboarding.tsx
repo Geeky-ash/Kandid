@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   photoCardCaption: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 11,
+    fontSize: 12,
     color: colors.text.secondary,
     fontWeight: typography.fontWeight.medium,
   },
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   socialProofText: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 11,
+    fontSize: 12,
     color: colors.brand.sageDark,
     fontWeight: typography.fontWeight.medium,
   },

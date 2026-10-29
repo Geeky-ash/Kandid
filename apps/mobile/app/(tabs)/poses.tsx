@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   },
   filterBadgeText: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 10,
+    fontSize: 12,
     color: colors.text.secondary,
     fontWeight: typography.fontWeight.bold,
   },
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
   },
   proChipText: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 10,
+    fontSize: 12,
     color: colors.text.onGold,
     fontWeight: typography.fontWeight.bold,
   },
@@ -331,16 +331,16 @@ const styles = StyleSheet.create({
   },
   poseCardCategory: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 11,
+    fontSize: 12,
     color: colors.text.secondary,
   },
   difficultyDot: {
-    fontSize: 10,
+    fontSize: 12,
     color: colors.text.tertiary,
   },
   difficultyText: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 10,
+    fontSize: 12,
     color: colors.text.secondary,
   },
   bottomSpacer: {

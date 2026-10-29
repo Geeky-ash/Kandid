@@ -16,6 +16,7 @@ export default function CameraScreen() {
   const [cueIndex, setCueIndex] = useState(0);
   const [cueType, setCueType] = useState<'subject' | 'photographer'>('subject');
   const burstTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const countdownTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const store = useCameraStore();
   const activePose =
@@ -23,10 +24,13 @@ export default function CameraScreen() {
   const cues = cueType === 'subject' ? activePose.subjectCues : activePose.photographerCues;
   const currentCue = cues[cueIndex % cues.length];
 
-  // cleanup burst timer on unmount
+  // cleanup timers and state on unmount
   useEffect(() => {
     return () => {
       if (burstTimerRef.current) clearInterval(burstTimerRef.current);
+      if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
+      store.setIsCapturing(false);
+      store.setCountdown(0);
     };
   }, []);
 
@@ -38,15 +42,19 @@ export default function CameraScreen() {
   const executeShutter = () => {
     if (store.shutterMode === 'single') {
       if (store.timer > 0) {
-        store.setCountdown(store.timer);
-        const timerInterval = setInterval(() => {
-          store.setCountdown(store.countdown - 1);
+        let remaining = store.timer;
+        store.setCountdown(remaining);
+        if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
+        countdownTimerRef.current = setInterval(() => {
+          remaining -= 1;
+          if (remaining <= 0) {
+            if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
+            store.setCountdown(0);
+            handleCapturePhoto();
+          } else {
+            store.setCountdown(remaining);
+          }
         }, 1000);
-        setTimeout(() => {
-          clearInterval(timerInterval);
-          store.setCountdown(0);
-          handleCapturePhoto();
-        }, store.timer * 1000);
       } else {
         handleCapturePhoto();
       }

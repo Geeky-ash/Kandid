@@ -9,9 +9,14 @@ export default function CurationResultsScreen() {
   const router = useRouter();
   const { data } = useLocalSearchParams<{ data?: string }>();
 
-  const curation: CurationResponse = data
-    ? JSON.parse(data)
-    : { status: 'success', bestShotIndex: 0, results: [] };
+  let curation: CurationResponse = { status: 'success', bestShotIndex: 0, results: [] };
+  if (data) {
+    try {
+      curation = JSON.parse(data);
+    } catch {
+      curation = { status: 'error', bestShotIndex: 0, results: [], error: 'invalid curation data' };
+    }
+  }
 
   const bestShot = curation.results[curation.bestShotIndex] || curation.results[0];
 
@@ -124,7 +129,7 @@ const styles = StyleSheet.create({
   shotCardWinner: { borderColor: colors.brand.gold, backgroundColor: 'rgba(197, 168, 128, 0.08)' },
   shotPhotoStub: { width: 80, height: 80, backgroundColor: '#2E2925', borderRadius: radius.lg, position: 'relative', justifyContent: 'space-between', padding: 4 },
   verdictBadge: { alignSelf: 'flex-start', paddingHorizontal: 6, paddingVertical: 2, borderRadius: radius.pill },
-  verdictBadgeText: { color: colors.text.inverse, fontSize: 10, fontWeight: typography.fontWeight.bold },
+  verdictBadgeText: { color: colors.text.inverse, fontSize: 12, fontWeight: typography.fontWeight.bold },
   shotScoreText: { color: colors.text.inverse, fontSize: 12, fontWeight: typography.fontWeight.bold, alignSelf: 'flex-end' },
   shotDetails: { flex: 1, justifyContent: 'center' },
   shotTitle: { fontFamily: typography.fontFamilies.body, fontSize: typography.fontSize.labelSm, fontWeight: typography.fontWeight.bold, color: colors.text.primary, marginBottom: 2 },

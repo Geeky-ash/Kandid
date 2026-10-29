@@ -20,6 +20,13 @@ export const TopUpModal: React.FC<TopUpModalProps> = ({ visible, onClose }) => {
   const [selectedId, setSelectedId] = useState('pack_20');
   const [isSuccess, setIsSuccess] = useState(false);
   const addCredits = useCreditStore(state => state.addCredits);
+  const timerRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const selectedPkg = PACKAGES.find(p => p.id === selectedId) || PACKAGES[1];
 
@@ -27,7 +34,8 @@ export const TopUpModal: React.FC<TopUpModalProps> = ({ visible, onClose }) => {
     triggerHaptic.success();
     addCredits(selectedPkg.credits, `purchased ${selectedPkg.name}`);
     setIsSuccess(true);
-    setTimeout(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
       setIsSuccess(false);
       onClose();
     }, 1200);

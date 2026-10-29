@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet, Dimensions, StyleProp, ViewStyle } from 'react-native';
 import { JointCoordinate } from '@kandid/content';
 import { colors } from '@kandid/ui-tokens';
@@ -35,7 +35,7 @@ export const MannequinView: React.FC<MannequinViewProps> = ({
   topOffset = 0,
   style,
 }) => {
-  const jointMap = new Map(joints.map(j => [j.id, j]));
+  const jointMap = useMemo(() => new Map(joints.map(j => [j.id, j])), [joints]);
 
   return (
     <View pointerEvents="none" style={[styles.canvas, { width, height, top: topOffset }, style]}>

@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   },
   popularBadgeText: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 11,
+    fontSize: 12,
     color: colors.background.primary,
     fontWeight: typography.fontWeight.bold,
   },
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   proPillBadgeText: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 11,
+    fontSize: 12,
     color: colors.brand.sageDark,
     fontWeight: typography.fontWeight.bold,
   },
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
   },
   popularCategory: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 11,
+    fontSize: 12,
     color: colors.text.secondary,
   },
   bottomSpacer: {

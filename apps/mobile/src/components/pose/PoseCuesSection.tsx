@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   framingItemLabel: {
     fontFamily: typography.fontFamilies.body,
-    fontSize: 10,
+    fontSize: 12,
     color: colors.text.tertiary,
     marginBottom: 2,
   },
